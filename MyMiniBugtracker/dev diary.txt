@@ -1,0 +1,41 @@
+10.05.2012 - Beginn der Entwicklung eines webbasierten Bug-Trackers, 
+
+Zunächst möchte ich das Projekt mit GIT versionieren. Dazu benötige ich einen GIT-Hub Account. 
+Ich probiere den Account zu verwenden den ich in der Firma angelegt habe. 
+Irgendwie kann ich das neu angelegte Repository nicht mehr auschecken. Irgend so ein SSH fehler. 
+Ich folge der Installationsanweisung von github (GIT for Windows). Wieder wieder ich das Problem, dass ich mich nicht anmelden kann. 
+in der Bash erscheint ständig "permission denied". Mein RSA Key Fingerprint weicht von dem ab, was github.com mir anzeigt. 
+
+Lösung: Aus irgendwelchen gründen hat der keygen die keyfiles in einem Falschen Ordner abgelegt. 
+Zielordner sollte sein: C:\Users\Fiederling Daniel\.ssh
+
+Jetzt muss ich das Projekt irgendwie in Eclipse auschecken. 
+Nach etwas rumprobieren habe ich es geschafft, indem ich mir in Eclipse einen weiteren SSH-Key angelegt habe und den ebenfalls auf github bekannt gemacht habe. 
+Es muss außerdem ein neues Vaadin Projekt angelegt werden, dass dann im heruntergeladenen Repository geshared wird. 
+Ich bekomme build Path Errors die ich nicht beheben kann, das Projekt läuft aber auch mit Fehlern. 
+Ich versuche das Projekt in ein Maven Projekt zu konvertieren irgendwie läuft dann garnichts mehr und ich komm auch hier auf keinen grünen Zweig und bin langsam frustriert... 
+
+Nachdem ich jetzt 3 Stunden mit Setup verbracht habe will jetzt endlich Programmieren um ergebnisse zu sehen.
+
+Die eigentliche Entwicklung lief dann recht zügig:
+Zuerst die Model-Klasse implementiert.
+Dann die rudimentäre Benutzeroberfläche in der alle Bugs tabellarisch angezeigt werden.Hierfür habe ich zunächst eine Klasse geschrieben 
+die Testdaten in die Tabelle schreibt.
+Anschließend habe ich Formular geschrieben um neue Bugs anzulegen. Hier gab es einige Probleme mit den SelectBoxen die ich nicht in der 
+createFieldFactory Methode erzeugen konnte. Als workaround habe ich die Felder nachträglich hinzugefügt auch wenn ich das nicht ganz so sauber finde.
+
+Sobald das Formular fertig war, wollte ich die Informationen in eine Db4o Datenbank schreiben. Also schnell nen Service und die DAO erzeugt. 
+Das schreiben in die DB hat auch wunderbar funktioniert. Nur als ich die Daten dann wieder komplett auslesen wollte hat mich irgendsoeine 
+DatabaseClosedException in den Wahnsinn getrieben. Dabei hätte das Auslesen ja prinzipiell funktioniert, solange ich die db nicht schließe. 
+Allerdings konnten dann auch keine Bugs mehr gespeichert werden, weil die DB gelockt ist... Irgendwie komisch und für mich jetz 
+erstmal nicht nachvollziehbar, warum das schließen nicht funktioniert. 
+
+Ich höre jetzt auf und checke noch schnell die Files ein. 
+
+
+
+
+
+
+
+
