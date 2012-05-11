@@ -53,6 +53,7 @@ public class Bug {
 		return bugType;
 	}
 
+	// AUI getter/setter muessen gleichen datentyp haben
 	public void setBugType(BugType bugType) {
 		this.bugType = bugType.getTitle();
 	}
@@ -61,6 +62,7 @@ public class Bug {
 		return status;
 	}
 
+	// AUI getter/setter muessen gleichen datentyp haben
 	public void setStatus(BugStatus status) {
 		this.status = status.getTitle();
 	}
