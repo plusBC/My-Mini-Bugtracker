@@ -23,15 +23,19 @@ public class BugContainer extends BeanItemContainer<Bug> implements
 	 * Natural property order for Person bean. Used in tables and forms. Name
 	 * the variables as in Person.class!
 	 */
+	// AUI Diese Auflistung hast du von Zdenko übernommen, oder? Das gefiel mir bei ihm schon nicht
+	// so, weil die Reihenfolge der Felder etc ist ja Aufgabe der Form, nicht das Datencontainers!
 	public static final Object[] NATURAL_COL_ORDER = new Object[] { "title",
 			"bugType", "status", "creationDate", "modificationDate" };
 
 	/**
-	 * "Human readable" captions for properties in same order as in
-	 * NATURAL_COL_ORDER.
+	 * "Human readable" captions for properties in same order as in NATURAL_COL_ORDER.
 	 */
-	public static final String[] COL_HEADERS = new String[] { "Title", "Type",
-			"State", "Creation Date", "Modification Date" };
+	// AUI kann man die Bereitstellung dieser Texte verbessern? Hard-coded Strings sind nicht so mein
+	// Ding und ich finde die Annahme, dass die Reihenfolge der Felder mit der Reiohenfolge der
+	// Übersetzungen übereinstimmt zu fehleranfällig
+	public static final String[] COL_HEADERS = new String[] { "Title", "Type", "State", "Creation Date",
+			"Modification Date" };
 
 	public BugContainer() throws InstantiationException, IllegalAccessException {
 		super(Bug.class);

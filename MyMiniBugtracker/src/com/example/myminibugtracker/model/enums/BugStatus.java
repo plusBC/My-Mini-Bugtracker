@@ -3,6 +3,7 @@ package com.example.myminibugtracker.model.enums;
 /**
  * @author Fiederling Daniel
  * 
+ * AUI Diese Enum listet potentielle BugStatus "Namen", oder? Die Übersetzungen sollen natürlich irgendwann woanders hin.. 
  */
 public enum BugStatus {
 

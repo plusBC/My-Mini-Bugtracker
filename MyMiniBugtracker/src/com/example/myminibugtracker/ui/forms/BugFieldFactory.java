@@ -9,6 +9,7 @@ import com.vaadin.ui.Field;
 import com.vaadin.ui.NativeSelect;
 import com.vaadin.ui.TextField;
 
+// AUI Nach Überlegung sehe ich mittlerweile eine FieldFactory eigentlich mehr als innere Klasse der entsprechenden Form. Vielleicht kannst du in die Richtung was ausprobieren.
 public class BugFieldFactory extends AbstractFieldFactory {
 
 	BugForm bugForm;
@@ -36,6 +37,7 @@ public class BugFieldFactory extends AbstractFieldFactory {
 	}
 
 	public NativeSelect createBugTypeSelect() {
+		// AUI hier bitte kein native select nehmen.. funktioniert das "normale" nicht?
 		NativeSelect bugTypeSelect = createNativeSelect(BugContainer.COL_HEADERS[1]);
 		BugType[] bugTypes = BugType.values();
 		for (BugType bugType : bugTypes) {
@@ -46,7 +48,7 @@ public class BugFieldFactory extends AbstractFieldFactory {
 	}
 
 	public NativeSelect createBugStatusSelect() {
-
+		// AUI hier bitte kein native select nehmen.. funktioniert das "normale" nicht?
 		NativeSelect bugStatusSelect = createNativeSelect(BugContainer.COL_HEADERS[2]);
 		BugStatus[] bugStatus = BugStatus.values();
 		for (BugStatus bugState : bugStatus) {
