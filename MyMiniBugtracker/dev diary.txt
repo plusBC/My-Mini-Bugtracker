@@ -34,6 +34,27 @@ Ich höre jetzt auf und checke noch schnell die Files ein.
 
 
 
+15.05.2012 Umstellung auf Maven
+
+Nach dem ersten Feedback von Thomas möchte ich mein Projekt auf Maven umstellen. Mir ist eingefallen, dass ich noch keine WTP integration für Maven installiert habe. 
+Also gleich mal nachholen. Jetzt versuche ich das Vaadin Projekt in ein Maven Projekt zu konvertieren. Ok, dann die Dependencies für Vaadin in die .pom einfügen und mal schauen was passiert. 
+Hmm... server startet nicht.
+
+java.lang.IllegalArgumentException: Document base \workspace\.metadata\.plugins\org.eclipse.wst.server.core\tmp0\wtpwebapps\spring2 does not exist or is not a readable directory
+
+Was will der denn mit spring2? das hab ich doch noch garnicht installiert bei mir? Mal googlen -- Ah, evtl. sollte ich mal den Server neu installieren. 
+Jep, jetzt startet er, aber auf meine Anwendung kann ich nicht zugreifen:
+
+"description The requested resource (/MyMiniBugtracker/) is not available."
+
+Was ist das jetzt schon wieder? Nach einiger Zeit die idee: Wurde die Anwendung richtig deployed? - Nein, es fehlen die classes, also rausfinden wo die classes hin compilliert werden und dann mit in die deployment-assembly.
+
+Jetzt endlich funktioniert es. Nurnoch eine db4o fehlermeldung, ja natürlich brauche ich die dependency auch noch. Schnell mal gucken wo ich das her bekomm. 
+Das hier sieht doch ganz gut aus: http://stackoverflow.com/questions/2303424/maven-and-db4o-dependency
+JEAH!!! ENDLICH LÄUFT ES!!!. 
+
+
+
 
 
 
