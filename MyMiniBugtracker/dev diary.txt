@@ -54,6 +54,16 @@ Das hier sieht doch ganz gut aus: http://stackoverflow.com/questions/2303424/mav
 JEAH!!! ENDLICH LÄUFT ES!!!. 
 
 
+Weiterer Feedbackpunkt von Thomas: Spring in das Projekt integrieren. 
+Ein glück hab ich schon maven am laufen ;-) Die Dependencies einfach in die POM einfügen. 
+
+Wo krieg ich das jetzt her? 
+http://mirrors.ibiblio.org/pub/mirrors/maven2/org/springframework/spring-core/ - Wenn ich jetzt noch wüsste welche Version wir in der Firma verwenden. Ich glaube 2...
+http://blog.springsource.com/2011/01/17/green-beans-getting-started-with-maven-and-spring/ - Den Artikel sollte ich mir mal im Detail zu Gemüte führen
+
+Irgendwie muss ich jetzt mein Projekt doch konfigurieren um Autowiring nutzen zu können. *an die application-context.xml denkt*
+
+https://vaadin.com/wiki/-/wiki/Main/Spring%20Integration - Vaadin bietet dazu ein Tutorial, hier geht es demnächst weiter...
 
 
 
