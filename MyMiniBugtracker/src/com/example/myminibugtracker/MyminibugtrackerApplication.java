@@ -1,5 +1,7 @@
 package com.example.myminibugtracker;
 
+import org.springframework.beans.factory.annotation.Configurable;
+
 import com.example.myminibugtracker.services.BugService;
 import com.example.myminibugtracker.services.BugServiceImpl;
 import com.example.myminibugtracker.ui.BugList;
@@ -14,6 +16,7 @@ import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.Window;
 import com.vaadin.ui.Window.Notification;
 
+@Configurable(preConstruction = true)
 public class MyminibugtrackerApplication extends Application implements
 		ClickListener {
 

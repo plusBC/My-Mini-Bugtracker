@@ -67,6 +67,41 @@ https://vaadin.com/wiki/-/wiki/Main/Spring%20Integration - Vaadin bietet dazu ei
 
 
 
+18.05.2012 - Spring Integration
+
+So... hat jetzt ne weile gedauert, aber am Ende habe den Server und die Applikation wieder am laufen und Spring konfiguriert. 
+In erster linie habe ich mich am Vaadin Tutorial orientiert. Nachdem ich das alles so zusammenkopiert hatte wie es auf der Tutorialseite beschrieben ist, startete natürlich mein Server nicht. 
+Irgend so ne Exception beim Laden des ContextLoaderListener. Auf der Suche nach der lösung bin ich dann irgendwann auf diese Seite gestoßen:
+
+http://www.mkyong.com/spring/spring-error-classnotfoundexception-org-springframework-web-context-contextloaderlistener/
+
+Die hat mir zwar nicht ganz die lösung geliefert, aber mich auf die idee gebracht einfach mal das hier in die Pom einzufügen: 
+
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring</artifactId>
+			<version>2.5.2</version>
+		</dependency>
+
+Siehe da, der Server startet. Warum wird das nicht gleich auf der Vaadin Seite beschrieben? 
+
+Danach wollte ich einfach mal rein debuggen um zu schauen ob das Autowiring funktioniert, aber allerdings funktioniert irgendwelchen Voodoo-Gründen der STRG+O shortcut nimmer. Und es wurde eine Fehlermeldung angezeigt. 
+"The Resource is not on Build Path" oder so. Weiß der Geier wo ich in letzter Zeit alles rumgepfuscht hab. Also erstmal das Projekt neu auschecken, jetzt weiß ich ja wie ich Spring anpacken muss.
+
+Gleiches Problem - Lösung aber ganz einfach: 
+
+unter properties-->Java Build Path:
+
+Source Folders on Build Path --> Add Folder...: 
+/src Ordner Einfügen
+
+und als Default Output Folder: 
+MyMiniBugtracker/WEB-INF/classes
+
+Jetzt startet wieder alles. Aber das Autowiring läuft noch nicht so läuft wie ich mir das vorstelle, ich kriege noch ständig ne nullpointer Exception. Ich muss nochmal nachlesen wie das Autowiring funktioniert. 
+Hier geht es demnächst weiter.
+
+
 
 
 
