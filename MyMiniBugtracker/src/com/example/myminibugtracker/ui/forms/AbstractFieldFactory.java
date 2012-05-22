@@ -2,8 +2,8 @@ package com.example.myminibugtracker.ui.forms;
 
 import java.awt.TextArea;
 
+import com.vaadin.ui.ComboBox;
 import com.vaadin.ui.DefaultFieldFactory;
-import com.vaadin.ui.NativeSelect;
 import com.vaadin.ui.TextField;
 
 public abstract class AbstractFieldFactory extends DefaultFieldFactory {
@@ -30,13 +30,14 @@ public abstract class AbstractFieldFactory extends DefaultFieldFactory {
 		return field;
 	}
 
-	public NativeSelect createNativeSelect(String caption) {
-		NativeSelect nativeSelect = new NativeSelect(caption);
-		nativeSelect.setImmediate(true);
-		nativeSelect.setWidth("300px");
-		nativeSelect.setNullSelectionAllowed(false);
-		nativeSelect.setRequired(true);
-		return nativeSelect;
+	public ComboBox createComboBox(String caption) {
+		ComboBox comboBox = new ComboBox(caption);
+		comboBox.setImmediate(true);
+		comboBox.setWidth("300px");
+		comboBox.setNullSelectionAllowed(false);
+		comboBox.setNewItemsAllowed(false);
+		comboBox.setRequired(true);
+		return comboBox;
 	}
 
 }

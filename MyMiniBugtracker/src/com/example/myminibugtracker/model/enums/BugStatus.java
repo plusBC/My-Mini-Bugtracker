@@ -1,13 +1,16 @@
 package com.example.myminibugtracker.model.enums;
 
+import com.example.myminibugtracker.services.Messages;
+
 /**
  * @author Fiederling Daniel
- * 
- * AUI Diese Enum listet potentielle BugStatus "Namen", oder? Die Übersetzungen sollen natürlich irgendwann woanders hin.. 
  */
 public enum BugStatus {
 
-	OPEN("open"), FIXED("fixed"), WONT_FIX("Won't fix"), DEPRECARED("Deprecated");
+	OPEN(Messages.getString("enum.BugStatus.open")), FIXED(Messages
+			.getString("enum.BugStatus.fixed")), WONT_FIX(Messages
+			.getString("enum.BugStatus.wontFix")), DEPRECARED(Messages
+			.getString("enum.BugStatus.deprecated"));
 
 	private final String title;
 

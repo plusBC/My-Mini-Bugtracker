@@ -4,10 +4,12 @@ import org.springframework.beans.factory.annotation.Configurable;
 
 import com.example.myminibugtracker.services.BugService;
 import com.example.myminibugtracker.services.BugServiceImpl;
+import com.example.myminibugtracker.services.Messages;
 import com.example.myminibugtracker.ui.BugList;
 import com.example.myminibugtracker.ui.forms.BugForm;
 import com.example.myminibugtracker.ui.managers.DialogAndFormManager;
 import com.vaadin.Application;
+import com.vaadin.terminal.gwt.server.WebApplicationContext;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Button.ClickListener;
@@ -30,11 +32,15 @@ public class MyminibugtrackerApplication extends Application implements
 	public void init() {
 
 		// prepare
+		setLocale(((WebApplicationContext) getContext()).getBrowser()
+				.getLocale());
+
 		this.dialogManager = new DialogAndFormManager(this);
 		// TODO: irgendwie mit Spring und Autowiring lösen
 		this.bugService = new BugServiceImpl();
 
-		Window mainWindow = new Window("My Mini Bugtracker");
+		Window mainWindow = new Window(
+				Messages.getString("ui.mainwindow.title"));
 
 		mainWindow.addComponent(new BugList(this));
 
@@ -42,11 +48,14 @@ public class MyminibugtrackerApplication extends Application implements
 		HorizontalLayout actionsButtonBar = new HorizontalLayout();
 		actionsButtonBar.setSpacing(true);
 
-		addBugButton = new Button("add Bug");
+		addBugButton = new Button(
+				Messages.getString("ui.mainwindow.button.addBug"));
 		addBugButton.addListener(this);
-		removeBugButton = new Button("remove Bug");
+		removeBugButton = new Button(
+				Messages.getString("ui.mainwindow.button.removeBug"));
 		removeBugButton.addListener(this);
-		editBugButton = new Button("edit Bug");
+		editBugButton = new Button(
+				Messages.getString("ui.mainwindow.button.editBug")); //$NON-NLS-1$
 		editBugButton.addListener(this);
 
 		actionsButtonBar.addComponent(addBugButton);
@@ -68,18 +77,24 @@ public class MyminibugtrackerApplication extends Application implements
 	public void buttonClick(ClickEvent event) {
 		// TODO Auto-generated method stub
 		if (event.getButton() == addBugButton) {
-			this.dialogManager.showNotification("addBugButton clicked",
+			this.dialogManager.showNotification(Messages
+					.getString("ui.mainwindow.notification.editBugClicked"),
 					Notification.TYPE_TRAY_NOTIFICATION);
 			VerticalLayout vl = new VerticalLayout();
 			vl.addComponent(new BugForm(null, this));
-			this.dialogManager.showDialog("Add new bug", vl, "420px", "390px");
+			this.dialogManager
+					.showDialog(
+							Messages.getString("ui.mainwindow.notification.addBugClicked"), vl, "420px", "390px"); //$NON-NLS-1$
 		} else if (event.getButton() == removeBugButton) {
-			getDialogAndFormManager().showNotification(
-					"removeBugButton clicked",
-					Notification.TYPE_TRAY_NOTIFICATION);
+			getDialogAndFormManager()
+					.showNotification(
+							Messages.getString("ui.mainwindow.notification.removeBugClicked"),
+							Notification.TYPE_TRAY_NOTIFICATION);
 		} else if (event.getSource() == editBugButton) {
-			getDialogAndFormManager().showNotification("editBugButton clicked",
-					Notification.TYPE_TRAY_NOTIFICATION);
+			getDialogAndFormManager()
+					.showNotification(
+							Messages.getString("ui.mainwindow.notification.editBugClicked"),
+							Notification.TYPE_TRAY_NOTIFICATION);
 		}
 
 	}

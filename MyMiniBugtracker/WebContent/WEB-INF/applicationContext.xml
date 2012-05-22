@@ -9,6 +9,7 @@
                                http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.5.xsd            
                                http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-2.5.xsd            
                                http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd">
+
 	<context:spring-configured />
 
 	<context:component-scan base-package="com.example.myminibugtracker" />
@@ -19,7 +20,6 @@
 	<bean
 		class="org.springframework.context.annotation.CommonAnnotationBeanPostProcessor" />
 	
-<!-- 	<bean class="com.example.myminibugtracker.services.BugServiceImpl">
-	</bean>
- -->
+	<bean class="com.example.myminibugtracker.services.BugServiceImpl"></bean>
+ 
 </beans>

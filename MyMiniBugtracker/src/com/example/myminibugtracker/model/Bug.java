@@ -1,7 +1,6 @@
 package com.example.myminibugtracker.model;
 
-import com.example.myminibugtracker.model.enums.BugStatus;
-import com.example.myminibugtracker.model.enums.BugType;
+import com.example.myminibugtracker.services.Messages;
 
 public class Bug {
 
@@ -28,7 +27,7 @@ public class Bug {
 	public void setModificationDate(long modificationDate) {
 		if (modificationDate < creationDate) {
 			throw new RuntimeException(
-					"cannot set modification date before creation date");
+					Messages.getString("exeption.Bug.ModificationDateError"));
 		}
 		this.modificationDate = modificationDate;
 	}
@@ -53,18 +52,16 @@ public class Bug {
 		return bugType;
 	}
 
-	// AUI getter/setter muessen gleichen datentyp haben
-	public void setBugType(BugType bugType) {
-		this.bugType = bugType.getTitle();
+	public void setBugType(String bugType) {
+		this.bugType = bugType;
 	}
 
 	public String getStatus() {
 		return status;
 	}
 
-	// AUI getter/setter muessen gleichen datentyp haben
-	public void setStatus(BugStatus status) {
-		this.status = status.getTitle();
+	public void setStatus(String status) {
+		this.status = status;
 	}
 
 	public String getId() {

@@ -1,13 +1,16 @@
 package com.example.myminibugtracker.model.enums;
 
+import com.example.myminibugtracker.services.Messages;
+
 /**
  * @author Fiederling Daniel
  * 
- * AUI Diese Enum listet potentielle BugType "Namen", oder? Die Übersetzungen sollen natürlich irgendwann woanders hin.. 
  */
 public enum BugType {
 
-	BUG("Bug"), FEATURE("Feature"), COSMETICS("Cosmetics");
+	BUG(Messages.getString("enum.BugType.bug")), FEATURE(Messages
+			.getString("enum.BugType.feature")), COSMETICS(Messages
+			.getString("enum.BugType.cosmetics"));
 
 	private final String title;
 

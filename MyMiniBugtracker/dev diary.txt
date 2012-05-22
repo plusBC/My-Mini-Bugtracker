@@ -69,13 +69,13 @@ https://vaadin.com/wiki/-/wiki/Main/Spring%20Integration - Vaadin bietet dazu ei
 
 18.05.2012 - Spring Integration
 
-So... hat jetzt ne weile gedauert, aber am Ende habe den Server und die Applikation wieder am laufen und Spring konfiguriert. 
+So... hat jetzt ne Weile gedauert, aber am Ende habe den Server und die Applikation wieder am laufen und Spring konfiguriert. 
 In erster linie habe ich mich am Vaadin Tutorial orientiert. Nachdem ich das alles so zusammenkopiert hatte wie es auf der Tutorialseite beschrieben ist, startete natürlich mein Server nicht. 
 Irgend so ne Exception beim Laden des ContextLoaderListener. Auf der Suche nach der lösung bin ich dann irgendwann auf diese Seite gestoßen:
 
 http://www.mkyong.com/spring/spring-error-classnotfoundexception-org-springframework-web-context-contextloaderlistener/
 
-Die hat mir zwar nicht ganz die lösung geliefert, aber mich auf die idee gebracht einfach mal das hier in die Pom einzufügen: 
+Die hat mir zwar nicht ganz die Lösung geliefert, aber mich auf die Idee gebracht einfach mal das hier in die Pom einzufügen: 
 
 		<dependency>
 			<groupId>org.springframework</groupId>
@@ -85,7 +85,7 @@ Die hat mir zwar nicht ganz die lösung geliefert, aber mich auf die idee gebrach
 
 Siehe da, der Server startet. Warum wird das nicht gleich auf der Vaadin Seite beschrieben? 
 
-Danach wollte ich einfach mal rein debuggen um zu schauen ob das Autowiring funktioniert, aber allerdings funktioniert irgendwelchen Voodoo-Gründen der STRG+O shortcut nimmer. Und es wurde eine Fehlermeldung angezeigt. 
+Danach wollte ich einfach mal rein debuggen um zu schauen ob das Autowiring funktioniert, aber allerdings funktioniert aus irgendwelchen Voodoo-Gründen der STRG+O shortcut nimmer. Und es wurde eine Fehlermeldung angezeigt. 
 "The Resource is not on Build Path" oder so. Weiß der Geier wo ich in letzter Zeit alles rumgepfuscht hab. Also erstmal das Projekt neu auschecken, jetzt weiß ich ja wie ich Spring anpacken muss.
 
 Gleiches Problem - Lösung aber ganz einfach: 
@@ -103,5 +103,31 @@ Hier geht es demnächst weiter.
 
 
 
+22.05.2012
 
+Ich habe jetzt 3 Std. die verschiedensten Dinge Probiert das Autowiring in den Griff zu bekommen und es einfach nicht hinbekommen. Was mach ich nur falsch? Habe ich was übersehen? 
+Diese Quellen wirkten besonders interessant:
+http://java9s.com/spring-framework/spring-auto-wiring-bytype-byname-constructor
+http://stackoverflow.com/questions/3659720/spring-3-autowire-in-standalone-application
+https://vaadin.com/forum/-/message_boards/view_message/112083
 
+dennoch konnte ich das Problem nicht lösen. Jetzt brauche ich ein Paar Erfolgserlebnisse und beginne die Anmerkungen von Thomas zu bearbeiten. 
+Als erstes möchte ich die Texte in eine messages.properties Datei auslagern. 
+
+wie das am schnellsten geht verrät mir das Book of Vaadin
+https://vaadin.com/book/-/page/rapid.i18n.html
+
+Erstmal nur bei einer Klasse um das zu testen.
+
+Wäre ja zu schön wenn das alles glatt laufen würde... Mal wieder eine Exception.
+java.util.MissingResourceException: Can't find bundle for base name messagess, locale de_DE
+Lösungsidee durch: http://stackoverflow.com/questions/8124638/jsf-bundle-loading-failure
+
+Scheint so, als wäre der Name der Properties Datei fehlerhaft. Also nochmal alles Rückgängig machen und beim Extrahieren darauf achten, dass die Datei erstmal messages.properties heißt. Diese wird immer als Fallback hergenommen. 
+
+Tatsächlich! Jetzt funktioniert es! Also jetzt alle notwendigen Messages extrahieren und dann in einem zweiten Schritt schöne Namen für die Einträge vergeben.
+
+Dann einfach mal Auis kommentare weiter anschauen und einen nach den anderen anpacken. 
+
+Ich stelle fest dass bei einem commit des Formulars nicht alle felder gleichzeitig validiert werden, sondern schon nach dem ersten Feld eine Exception geworfen wird. Evtl. muss ich die Validierung der Felder vor dem 
+Commit noch selbst übernehmen. 
