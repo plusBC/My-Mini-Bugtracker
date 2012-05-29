@@ -1,6 +1,5 @@
 package com.example.myminibugtracker.ui.forms;
 
-import com.example.myminibugtracker.data.BugContainer;
 import com.example.myminibugtracker.model.enums.BugStatus;
 import com.example.myminibugtracker.model.enums.BugType;
 import com.example.myminibugtracker.services.Messages;
@@ -24,7 +23,7 @@ public class BugFieldFactory extends AbstractFieldFactory {
 
 		if ("title".equals(propertyId)) {
 			TextField title = createTextField(
-					Messages.getString("ui.form.BugFieldFactory.caption.title"),
+					Messages.getString("ui.form.BugForm.caption.title"),
 					true);
 			title.setRequiredError("Title necessarry");
 			return title;
@@ -32,7 +31,7 @@ public class BugFieldFactory extends AbstractFieldFactory {
 
 		if ("description".equals(propertyId)) {
 			TextField textField = createTextField(
-					Messages.getString("ui.form.BugFieldFactory.caption.description"), true); 
+					Messages.getString("ui.form.BugForm.caption.description"), true); 
 			// ich kann leider hier keine TextArea verwenden, also workaround
 			textField.setRows(10);
 			textField.setRequiredError("Description required");
@@ -57,7 +56,7 @@ public class BugFieldFactory extends AbstractFieldFactory {
 		// doch auch verwendet! Warum sollte das nicht verwendet werden? naja...
 		// ich nehm einfach mal die ComboBox
 		ComboBox bugTypeSelect = createComboBox(Messages
-				.getString("ui.form.BugFieldFactory.caption.type"));
+				.getString("ui.form.BugForm.caption.type"));
 		BugType[] bugTypes = BugType.values();
 		for (BugType bugType : bugTypes) {
 			bugTypeSelect.addItem(bugType);
@@ -70,7 +69,7 @@ public class BugFieldFactory extends AbstractFieldFactory {
 		// AUI hier bitte kein native select nehmen.. funktioniert das "normale"
 		// nicht?
 		ComboBox bugStatusSelect = createComboBox(Messages
-				.getString("ui.form.BugFieldFactory.caption.state"));
+				.getString("ui.form.BugForm.caption.state"));
 		BugStatus[] bugStatus = BugStatus.values();
 		for (BugStatus bugState : bugStatus) {
 			bugStatusSelect.addItem(bugState);

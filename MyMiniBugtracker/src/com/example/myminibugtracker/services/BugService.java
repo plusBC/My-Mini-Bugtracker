@@ -1,12 +1,12 @@
 package com.example.myminibugtracker.services;
 
-import java.util.List;
+import java.util.Collection;
 
 import com.example.myminibugtracker.model.Bug;
 
 public interface BugService {
 
-	List<Bug> getAll();
+	Collection<Bug> getAll();
 
 	void save(Bug bug);
 

@@ -4,12 +4,7 @@ import java.util.Arrays;
 
 import com.example.myminibugtracker.MyminibugtrackerApplication;
 import com.example.myminibugtracker.model.Bug;
-import com.example.myminibugtracker.model.enums.BugStatus;
-import com.example.myminibugtracker.model.enums.BugType;
-import com.vaadin.data.Validator.InvalidValueException;
 import com.vaadin.data.util.BeanItem;
-import com.vaadin.ui.ComboBox;
-import com.vaadin.ui.NativeSelect;
 
 /**
  * @author Fiederling Daniel
@@ -35,19 +30,19 @@ public class BugForm extends AbstractForm {
 
 	@Override
 	protected void onClickSave() {
-		// TODO: Hier wird momentan nur eine Fehlermessage angezeigt...
+		// TODO: Hier wird momentan nur eine einzige Fehlermessage angezeigt...
 		commit();
 		BeanItem<Bug> item = (BeanItem<Bug>) getItemDataSource();
 		Bug bug = item.getBean();
-		ComboBox comboBox = (ComboBox) this.getField("bugType");
-		bug.setBugType(((BugType) comboBox.getValue()).getTitle());
-
-		comboBox = (ComboBox) this.getField("status");
-		bug.setStatus(((BugStatus) comboBox.getValue()).getTitle());
+//		ComboBox comboBox = (ComboBox) this.getField("bugType");
+//		bug.setBugType(((BugType) comboBox.getValue()).getTitle());
+//
+//		comboBox = (ComboBox) this.getField("status");
+//		bug.setStatus(((BugStatus) comboBox.getValue()).getTitle());
 
 		app.getBugService().save(bug);
 		app.getDialogAndFormManager().hideDialog(this.getWindow());
-
+		app.addBugToBuglist(bug);
 	}
 
 	@Override

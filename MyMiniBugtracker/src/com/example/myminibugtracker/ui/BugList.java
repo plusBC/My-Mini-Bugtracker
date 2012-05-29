@@ -1,10 +1,14 @@
 package com.example.myminibugtracker.ui;
 
-import java.util.List;
+import java.util.Collection;
 
 import com.example.myminibugtracker.MyminibugtrackerApplication;
 import com.example.myminibugtracker.data.BugContainer;
 import com.example.myminibugtracker.model.Bug;
+import com.example.myminibugtracker.services.Messages;
+import com.example.myminibugtracker.ui.forms.BugForm;
+import com.vaadin.ui.VerticalLayout;
+import com.vaadin.ui.Window.Notification;
 
 /**
  * 
@@ -17,11 +21,12 @@ public class BugList extends AbstractBugList {
 		super(app);
 
 		// create some dummy data
-		List<Bug> allBugs = this.app.getBugService().getAll();
+		Collection<Bug> allBugs = this.app.getBugService().getAll();
 		BugContainer bugContainer;
 		try {
 			bugContainer = new BugContainer();
 			bugContainer.addAll(allBugs);
+			bugContainer.addListener(this);
 		} catch (InstantiationException e) {
 			e.printStackTrace();
 			throw new RuntimeException(e.getStackTrace().toString());
@@ -39,7 +44,14 @@ public class BugList extends AbstractBugList {
 
 	@Override
 	protected void onDoubleClick(Object itemId) {
-		// new GameForm((Game) itemId, app);
+		//Plus scheint so als gäbe es einen Bug in Vaadin, der Doppelklick wird zweimal aufgerufen...
+		app.getDialogAndFormManager().showNotification("bug double clicked",
+				Notification.TYPE_TRAY_NOTIFICATION);
+		VerticalLayout vl = new VerticalLayout();
+		vl.addComponent(new BugForm((Bug) itemId, app));
+		app.getDialogAndFormManager().showDialog(
+				Messages.getString("ui.form.BugForm.title.addBug"), vl,
+				"420px", "390px");
 	}
 
 }

@@ -131,3 +131,24 @@ Dann einfach mal Auis kommentare weiter anschauen und einen nach den anderen anp
 
 Ich stelle fest dass bei einem commit des Formulars nicht alle felder gleichzeitig validiert werden, sondern schon nach dem ersten Feld eine Exception geworfen wird. Evtl. muss ich die Validierung der Felder vor dem 
 Commit noch selbst übernehmen. 
+
+
+29.05.2012 
+
+Heute möchte ich dringend irgendwelche Fortschritte sehen und mich nicht mit irgendwelchen konfigurationen rumschlagen müssen. Als heutiges Ziel habe ich mir gesteckt, mal richtig auf einer DB4O Datenbank zu arbeiten. 
+Laden und speichern von Bugs sollte ich doch sicherlich hinkriegen... Und mal schaun, wenn das funktioniert ist editieren sicher nurnoch Formsache. 
+
+Es ist einfach zum Mäusemelken! Ich kann einfach nicht wie im Tutorial beschrieben vorgehen. 
+
+1. DB öffnen, 
+2. Auf der DB Arbeiten 
+3. DB schließen
+
+Beim Versuch bei Programmstart alle Daten aus der Datenbank zu laden und die Datenbank am Ende wieder zu schließen, wird immer eine com.db4o.ext.DatabaseClosedException geworfen. Irgendwie finde ich keine brauchbare Lösung, 
+außer die Datenbank nur einmalig bei erzeugen der DB4O Dao zu öffnen und danach nicht mehr zu schließen. Das ist natürlich überhaupt nicht schick und muss irgendwann noch behoben werden. 
+
+Aber sonst ist das Arbeiten mit DB4O echt simpel. Editieren und Löschen von Objekten ist kein Problem gewesen. Beim Editieren eines Bugs werden die ComboBoxen noch nicht mit dem Richtigen Wert vorselektiert. Mit diesem Problem habe ich mich 
+auch eine Weile beschäftigt aber für heute ebenfalls keine Lösung gefunden. Naja, das Projekt nimmt so langsam Formen an. Nächste Woche schaue ich mir mal die Architektur nochmal genauer an und schau mal was sich verbessern lässt. 
+Außerdem fehlt es an vielen Stellen noch an Kommentaren, die werde ich bei dieser gelegenheit auch mal ergänzen. 
+
+

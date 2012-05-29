@@ -1,5 +1,10 @@
 package com.example.myminibugtracker.model;
 
+import org.apache.commons.lang.StringUtils;
+import org.joda.time.DateTime;
+import org.joda.time.format.DateTimeFormat;
+import org.joda.time.format.DateTimeFormatter;
+
 import com.example.myminibugtracker.services.Messages;
 
 public class Bug {
@@ -70,6 +75,31 @@ public class Bug {
 
 	public void setId(String id) {
 		this.id = id;
+	}
+
+	public String getCreationDateAsString() {
+		//TODO klasse mit DateUtils DateTimeFormatter als statische Variable
+		DateTime creationDate = new DateTime(this.creationDate);
+		DateTimeFormatter formatter = DateTimeFormat
+				.forPattern("dd.MM.YYYY HH:mm:ss");
+		return creationDate.toString(formatter);
+	}
+
+	public String getModificationDateAsString() {
+		//TODO klasse mit DateUtils DateTimeFormatter als statische Variable
+		DateTime modificationDate = new DateTime(this.modificationDate);
+		DateTimeFormatter formatter = DateTimeFormat
+				.forPattern("dd.MM.YYYY HH:mm:ss");
+		return modificationDate.toString(formatter);
+
+	}
+
+	public boolean hasId() {
+		if (StringUtils.isNotBlank(id)) {
+			return true;
+		} else {
+			return false;
+		}
 	}
 
 }

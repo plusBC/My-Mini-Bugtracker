@@ -29,7 +29,7 @@ public class BugContainer extends BeanItemContainer<Bug> implements
 	// so, weil die Reihenfolge der Felder etc ist ja Aufgabe der Form, nicht
 	// das Datencontainers!
 	public static final Object[] NATURAL_COL_ORDER = new Object[] { "title",
-			"bugType", "status", "creationDate", "modificationDate" };
+			"bugType", "status", "creationDateAsString", "modificationDateAsString" };
 
 	/**
 	 * "Human readable" captions for properties in same order as in

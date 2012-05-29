@@ -25,6 +25,10 @@ public class DialogAndFormManager {
 		this.app.getMainWindow().addWindow(window);
 
 	}
+	
+	public void showYesNoDialog(String caption){
+		
+	}
 
 	public void hideDialog(Window windowToRemove) {
 		app.getMainWindow().removeWindow(windowToRemove);
