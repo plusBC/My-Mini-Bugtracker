@@ -38,6 +38,7 @@ public abstract class AbstractBugList extends Table {
 	}
 
 	protected abstract void onDoubleClick(Object itemId);
+
 	protected abstract void onSelectionChange(Object value);
 
 	class MyItemClickListener implements ItemClickListener {
@@ -48,14 +49,14 @@ public abstract class AbstractBugList extends Table {
 
 		}
 	}
-	
+
 	class MyValueChangeListener implements ValueChangeListener {
 
 		public void valueChange(Property.ValueChangeEvent event) {
 			Object value = getValue();
 			onSelectionChange(value);
 		}
-		
+
 	}
 
 }

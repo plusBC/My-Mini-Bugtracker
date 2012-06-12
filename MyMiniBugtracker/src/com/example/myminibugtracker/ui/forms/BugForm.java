@@ -57,7 +57,8 @@ public class BugForm extends AbstractForm {
 		TextField title = (TextField) getField("title");
 		String titleValue = (String) title.getValue();
 		if (StringUtils.isBlank(titleValue)) {
-			title.setComponentError(new UserError("title mustn't be empty"));
+			title.setComponentError(new UserError(Messages
+					.getString("ui.form.BugForm.error.titleEmpty")));
 			valid = false;
 		}
 
@@ -73,8 +74,8 @@ public class BugForm extends AbstractForm {
 		TextField description = (TextField) getField("description");
 		String descriptionValue = (String) description.getValue();
 		if (StringUtils.isBlank(descriptionValue)) {
-			description.setComponentError(new UserError(
-					"description mustn't be empty"));
+			description.setComponentError(new UserError(Messages
+					.getString("ui.form.BugForm.error.descriptionEmpty")));
 			valid = false;
 		}
 
@@ -90,7 +91,8 @@ public class BugForm extends AbstractForm {
 		ComboBox status = (ComboBox) getField("status");
 		BugStatus statusValue = (BugStatus) status.getValue();
 		if (statusValue == null) {
-			status.setComponentError(new UserError("Please select a status"));
+			status.setComponentError(new UserError(Messages
+					.getString("ui.form.BugForm.error.statusEmpty")));
 			valid = false;
 		}
 
@@ -105,7 +107,8 @@ public class BugForm extends AbstractForm {
 		ComboBox bugType = (ComboBox) getField("bugType");
 		BugType bugTypeValue = (BugType) bugType.getValue();
 		if (bugTypeValue == null) {
-			bugType.setComponentError(new UserError("Please select a bug type"));
+			bugType.setComponentError(new UserError(Messages
+					.getString("ui.form.BugForm.error.bugTypeEmpty")));
 			valid = false;
 		}
 
