@@ -149,12 +149,14 @@ außer die Datenbank nur einmalig bei erzeugen der DB4O Dao zu öffnen und danach 
 
 Aber sonst ist das Arbeiten mit DB4O echt simpel. Editieren und Löschen von Objekten ist kein Problem gewesen. Beim Editieren eines Bugs werden die ComboBoxen noch nicht mit dem Richtigen Wert vorselektiert. Mit diesem Problem habe ich mich 
 auch eine Weile beschäftigt aber für heute ebenfalls keine Lösung gefunden. Naja, das Projekt nimmt so langsam Formen an. Nächste Woche schaue ich mir mal die Architektur nochmal genauer an und schau mal was sich verbessern lässt. 
-Außerdem fehlt es an vielen Stellen noch an Kommentaren, die werde ich bei dieser gelegenheit auch mal ergänzen. 
+Außerdem fehlt es an vielen Stellen noch an Kommentaren, die werde ich bei dieser Gelegenheit auch mal ergänzen. 
 
 
 05.06.2012 - Code Überarbeitung
-Heute habe ich den Code etwas aufgeräumt und kommentiert. Insbesondere habe ich probiert die letzen Anmerkungen von Aui bzgl. der Architektur umzusetzen. Dabei habe ich mich an zwei Baustellen besonders aufgehalten:
-1. Wie erreiche ich es am besten, dass das Datum abhängig von der Locale formatiert wird? Ich habe noch kein zufriedenstellendes Ergebnis und ich muss nochmal nach den "Best practices" recherchieren. 
-2. Bei Editieren eines Bugs wird die ComboBox ja noch nicht richtig gesetzt, sondern erscheint leer. Nachdem es wieder so spät war habe ich den versuch abgebrochen und werde ihn nächste Woche wieder aufnehmen. 
+Heute habe ich den Code etwas aufgeräumt und kommentiert. Insbesondere habe ich probiert die letzen Anmerkungen von Aui bzgl. der Architektur umzusetzen. Dabei habe ich mich an drei Baustellen besonders aufgehalten:
+1. Bug: Wenn ich probiert habe, einen existierenden Bug zu editieren wurden immer zwei "Editieren" Fenster beim Doppelklick auf den Bug geöffnet. Das lag daran, dass der Listener zweimal hinzugefuegt wurde. 
+	(Einmal in der BugList und ein weiteres mal in der AbstractBugList)
+2. Wie erreiche ich es am besten, dass das Datum abhängig von der Locale formatiert wird? Ich habe noch kein zufriedenstellendes Ergebnis und ich muss nochmal nach den "Best practices" recherchieren. 
+3. Bei Editieren eines Bugs wird die ComboBox ja noch nicht richtig gesetzt, sondern erscheint leer. Nachdem es wieder so spät war habe ich den versuch abgebrochen und werde ihn nächste Woche wieder aufnehmen. 
 
 12.06.2012 - 
