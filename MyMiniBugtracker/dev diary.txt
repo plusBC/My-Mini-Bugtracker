@@ -133,7 +133,7 @@ Ich stelle fest dass bei einem commit des Formulars nicht alle felder gleichzeit
 Commit noch selbst übernehmen. 
 
 
-29.05.2012 
+29.05.2012 - Db4o CRUD
 
 Heute möchte ich dringend irgendwelche Fortschritte sehen und mich nicht mit irgendwelchen konfigurationen rumschlagen müssen. Als heutiges Ziel habe ich mir gesteckt, mal richtig auf einer DB4O Datenbank zu arbeiten. 
 Laden und speichern von Bugs sollte ich doch sicherlich hinkriegen... Und mal schaun, wenn das funktioniert ist editieren sicher nurnoch Formsache. 
@@ -141,7 +141,7 @@ Laden und speichern von Bugs sollte ich doch sicherlich hinkriegen... Und mal sc
 Es ist einfach zum Mäusemelken! Ich kann einfach nicht wie im Tutorial beschrieben vorgehen. 
 
 1. DB öffnen, 
-2. Auf der DB Arbeiten 
+2. Auf der DB arbeiten 
 3. DB schließen
 
 Beim Versuch bei Programmstart alle Daten aus der Datenbank zu laden und die Datenbank am Ende wieder zu schließen, wird immer eine com.db4o.ext.DatabaseClosedException geworfen. Irgendwie finde ich keine brauchbare Lösung, 
@@ -152,3 +152,9 @@ auch eine Weile beschäftigt aber für heute ebenfalls keine Lösung gefunden. Naja
 Außerdem fehlt es an vielen Stellen noch an Kommentaren, die werde ich bei dieser gelegenheit auch mal ergänzen. 
 
 
+05.06.2012 - Code Überarbeitung
+Heute habe ich den Code etwas aufgeräumt und kommentiert. Insbesondere habe ich probiert die letzen Anmerkungen von Aui bzgl. der Architektur umzusetzen. Dabei habe ich mich an zwei Baustellen besonders aufgehalten:
+1. Wie erreiche ich es am besten, dass das Datum abhängig von der Locale formatiert wird? Ich habe noch kein zufriedenstellendes Ergebnis und ich muss nochmal nach den "Best practices" recherchieren. 
+2. Bei Editieren eines Bugs wird die ComboBox ja noch nicht richtig gesetzt, sondern erscheint leer. Nachdem es wieder so spät war habe ich den versuch abgebrochen und werde ihn nächste Woche wieder aufnehmen. 
+
+12.06.2012 - 

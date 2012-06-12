@@ -4,7 +4,15 @@ import java.util.Arrays;
 
 import com.example.myminibugtracker.MyminibugtrackerApplication;
 import com.example.myminibugtracker.model.Bug;
+import com.example.myminibugtracker.model.enums.BugStatus;
+import com.example.myminibugtracker.model.enums.BugType;
+import com.example.myminibugtracker.services.Messages;
+import com.vaadin.data.Item;
 import com.vaadin.data.util.BeanItem;
+import com.vaadin.ui.ComboBox;
+import com.vaadin.ui.Component;
+import com.vaadin.ui.Field;
+import com.vaadin.ui.TextField;
 
 /**
  * @author Fiederling Daniel
@@ -23,7 +31,12 @@ public class BugForm extends AbstractForm {
 		}
 		setFormDataSource(bug, Arrays.asList(visiblePropertiesArray));
 
-		// addField("bugType", fieldFactory.createBugTypeSelect());
+		ComboBox bugType = (ComboBox) getField("bugType");
+		bugType.select(bug.getBugType());
+		bugType.setImmediate(true);
+		System.out.println(bugType.getValue());
+		
+		addField("bugType", bugType);
 		// addField("status", fieldFactory.createBugStatusSelect());
 
 	}
@@ -34,11 +47,11 @@ public class BugForm extends AbstractForm {
 		commit();
 		BeanItem<Bug> item = (BeanItem<Bug>) getItemDataSource();
 		Bug bug = item.getBean();
-//		ComboBox comboBox = (ComboBox) this.getField("bugType");
-//		bug.setBugType(((BugType) comboBox.getValue()).getTitle());
-//
-//		comboBox = (ComboBox) this.getField("status");
-//		bug.setStatus(((BugStatus) comboBox.getValue()).getTitle());
+		// ComboBox comboBox = (ComboBox) this.getField("bugType");
+		// bug.setBugType(((BugType) comboBox.getValue()).getTitle());
+		//
+		// comboBox = (ComboBox) this.getField("status");
+		// bug.setStatus(((BugStatus) comboBox.getValue()).getTitle());
 
 		app.getBugService().save(bug);
 		app.getDialogAndFormManager().hideDialog(this.getWindow());
@@ -49,6 +62,88 @@ public class BugForm extends AbstractForm {
 	protected void onClickCancel() {
 		discard();
 		app.getDialogAndFormManager().hideDialog(this.getWindow());
+	}
+
+	class BugFieldFactory extends AbstractFieldFactory {
+
+		BugForm bugForm;
+
+		public BugFieldFactory(BugForm bugForm) {
+			this.bugForm = bugForm;
+		}
+
+		@Override
+		public Field createField(Item item, Object propertyId,
+				Component uiContext) {
+
+			if ("title".equals(propertyId)) {
+				TextField title = createTextField(
+						Messages.getString("ui.form.BugForm.caption.title"),
+						true);
+				title.setRequiredError("Title necessarry");
+				return title;
+			}
+
+			if ("description".equals(propertyId)) {
+				TextField textField = createTextField(
+						Messages.getString("ui.form.BugForm.caption.description"),
+						true);
+				// ich kann leider hier keine TextArea verwenden, also
+				// workaround
+				textField.setRows(10);
+				textField.setRequiredError("Description required");
+				return textField;
+			}
+
+			if ("bugType".equals(propertyId)) {
+				return createBugTypeSelect();
+			}
+
+			if ("status".equals(propertyId)) {
+				return createBugStatusSelect();
+			}
+
+			return super.createField(item, propertyId, uiContext);
+		}
+
+		public ComboBox createBugTypeSelect() {
+			// AUI hier bitte kein native select nehmen.. funktioniert das
+			// "normale"
+			// nicht?
+			// Plus: Welches "normale"? auf http://demo.vaadin.com/sampler wird
+			// das
+			// doch auch verwendet! Warum sollte das nicht verwendet werden?
+			// naja...
+			// ich nehm einfach mal die ComboBox
+			ComboBox bugTypeSelect = createComboBox(Messages
+					.getString("ui.form.BugForm.caption.type"));
+			BugType[] bugTypes = BugType.values();
+			for (BugType bugType : bugTypes) {
+				bugTypeSelect.addItem(bugType);
+				bugTypeSelect.setItemCaption(bugType, bugType.getTitle());
+			}
+			return bugTypeSelect;
+		}
+
+		public ComboBox createBugStatusSelect() {
+			// AUI hier bitte kein native select nehmen.. funktioniert das
+			// "normale"
+			// nicht?
+			// Plus: Welches "normale"? auf http://demo.vaadin.com/sampler wird
+			// das
+			// doch auch verwendet! Warum sollte das nicht verwendet werden?
+			// naja...
+			// ich nehm einfach mal die ComboBox
+			ComboBox bugStatusSelect = createComboBox(Messages
+					.getString("ui.form.BugForm.caption.state"));
+			BugStatus[] bugStatus = BugStatus.values();
+			for (BugStatus bugState : bugStatus) {
+				bugStatusSelect.addItem(bugState);
+				bugStatusSelect.setItemCaption(bugState, bugState.getTitle());
+			}
+			return bugStatusSelect;
+		}
+
 	}
 
 }

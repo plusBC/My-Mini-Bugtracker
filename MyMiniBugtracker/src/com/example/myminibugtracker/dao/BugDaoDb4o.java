@@ -79,7 +79,7 @@ public class BugDaoDb4o implements BugDao {
 			DB.delete(bug);
 			DB.commit();
 			
-			//TODO klasse mit DateUtils DateTimeFormatter als statische Variable
+			//TODO Datum formatieren zentralisieren und in Abhängigkeit der Locale des benutzers formatieren
 			DateTimeFormatter formatter = DateTimeFormat
 					.forPattern("dd.MM.YYYY HH:mm:ss");
 			System.out.println("Bug with id: " + bug.getId() + " deleted at: " + DateTime.now().toString(formatter));

@@ -19,4 +19,17 @@ public class Messages {
 			return '!' + key + '!';
 		}
 	}
+	
+	public static String getString(String key, Object[] arg) {
+		try {
+			String bundleString = RESOURCE_BUNDLE.getString(key);
+			for (int i = 0; i < arg.length; i++) {
+				String regex = "[{][0-9][0-9]*[}]";
+				bundleString = bundleString.replaceAll(regex, arg[i].toString());
+			}
+			return bundleString;
+		} catch (MissingResourceException e) {
+			return '!' + key + '!';
+		}
+	}
 }

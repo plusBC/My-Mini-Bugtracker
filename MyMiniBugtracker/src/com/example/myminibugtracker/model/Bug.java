@@ -78,7 +78,7 @@ public class Bug {
 	}
 
 	public String getCreationDateAsString() {
-		//TODO klasse mit DateUtils DateTimeFormatter als statische Variable
+		//TODO Datum formatieren zentralisieren und in Abhängigkeit der Locale des benutzers formatieren
 		DateTime creationDate = new DateTime(this.creationDate);
 		DateTimeFormatter formatter = DateTimeFormat
 				.forPattern("dd.MM.YYYY HH:mm:ss");
@@ -86,7 +86,7 @@ public class Bug {
 	}
 
 	public String getModificationDateAsString() {
-		//TODO klasse mit DateUtils DateTimeFormatter als statische Variable
+		//TODO Datum formatieren zentralisieren und in Abhängigkeit der Locale des benutzers formatieren
 		DateTime modificationDate = new DateTime(this.modificationDate);
 		DateTimeFormatter formatter = DateTimeFormat
 				.forPattern("dd.MM.YYYY HH:mm:ss");

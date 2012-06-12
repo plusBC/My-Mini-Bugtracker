@@ -20,13 +20,12 @@ public class BugList extends AbstractBugList {
 	public BugList(MyminibugtrackerApplication app) {
 		super(app);
 
-		// create some dummy data
+		// load data and add it to datacontainer
 		Collection<Bug> allBugs = this.app.getBugService().getAll();
 		BugContainer bugContainer;
 		try {
 			bugContainer = new BugContainer();
 			bugContainer.addAll(allBugs);
-			bugContainer.addListener(this);
 		} catch (InstantiationException e) {
 			e.printStackTrace();
 			throw new RuntimeException(e.getStackTrace().toString());
@@ -35,23 +34,36 @@ public class BugList extends AbstractBugList {
 		}
 		setContainerDataSource(bugContainer);
 
-		//
-		setVisibleColumns(BugContainer.NATURAL_COL_ORDER);
-		setColumnHeaders(BugContainer.COL_HEADERS);
-		addListener(new MyItemClickListener());
+		// set visible columns
+		final String[] VISIBLE_COL = new String[] { "title", "bugType",
+				"status", "creationDateAsString", "modificationDateAsString" };
+		setVisibleColumns(VISIBLE_COL);
+
+		// set column headers
+		final String[] COL_HEADERS = new String[] {
+				Messages.getString("ui.mainwindow.colHeaders.title"),
+				Messages.getString("ui.mainwindow.colHeaders.type"),
+				Messages.getString("ui.mainwindow.colHeaders.state"),
+				Messages.getString("ui.mainwindow.colHeaders.creationDate"),
+				Messages.getString("ui.mainwindow.colHeaders.modificationDate") };
+		setColumnHeaders(COL_HEADERS);
 
 	}
 
 	@Override
 	protected void onDoubleClick(Object itemId) {
-		//Plus scheint so als gäbe es einen Bug in Vaadin, der Doppelklick wird zweimal aufgerufen...
-		app.getDialogAndFormManager().showNotification("bug double clicked",
-				Notification.TYPE_TRAY_NOTIFICATION);
+
+		//show editBug dialog
 		VerticalLayout vl = new VerticalLayout();
 		vl.addComponent(new BugForm((Bug) itemId, app));
 		app.getDialogAndFormManager().showDialog(
 				Messages.getString("ui.form.BugForm.title.addBug"), vl,
 				"420px", "390px");
+		
+		//show notification
+		app.getDialogAndFormManager().showNotification("bug double clicked",
+				Notification.TYPE_TRAY_NOTIFICATION);
+
 	}
 
 }

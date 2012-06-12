@@ -20,31 +20,6 @@ import com.vaadin.data.util.BeanItemContainer;
 public class BugContainer extends BeanItemContainer<Bug> implements
 		Serializable {
 
-	/**
-	 * Natural property order for Person bean. Used in tables and forms. Name
-	 * the variables as in Person.class!
-	 */
-	// AUI Diese Auflistung hast du von Zdenko übernommen, oder? Das gefiel mir
-	// bei ihm schon nicht
-	// so, weil die Reihenfolge der Felder etc ist ja Aufgabe der Form, nicht
-	// das Datencontainers!
-	public static final Object[] NATURAL_COL_ORDER = new Object[] { "title",
-			"bugType", "status", "creationDateAsString", "modificationDateAsString" };
-
-	/**
-	 * "Human readable" captions for properties in same order as in
-	 * NATURAL_COL_ORDER.
-	 */
-	// AUI TODO
-	// ich finde die Annahme, dass die Reihenfolge der Felder mit der
-	// Reihenfolge der Übersetzungen übereinstimmt zu fehleranfällig
-	public static final String[] COL_HEADERS = new String[] {
-			Messages.getString("ui.mainwindow.colHeaders.title"),
-			Messages.getString("ui.mainwindow.colHeaders.type"),
-			Messages.getString("ui.mainwindow.colHeaders.state"),
-			Messages.getString("ui.mainwindow.colHeaders.creationDate"),
-			Messages.getString("ui.mainwindow.colHeaders.modificationDate") };
-
 	public BugContainer() throws InstantiationException, IllegalAccessException {
 		super(Bug.class);
 	}
@@ -61,22 +36,6 @@ public class BugContainer extends BeanItemContainer<Bug> implements
 		}
 
 	}
-
-	// public static BugContainer create(List<Bug> bugs) {
-	// try {
-	// BugContainer bugContainer = new BugContainer();
-	// bugContainer.addAll(bugs);
-	// return bugContainer;
-	//
-	// } catch (InstantiationException e) {
-	// e.printStackTrace();
-	// throw new RuntimeException(e.getStackTrace().toString());
-	// } catch (IllegalAccessException e) {
-	// e.printStackTrace();
-	// throw new RuntimeException(e.getStackTrace().toString());
-	// }
-	//
-	// }
 
 	public static BugContainer createWithTestData() {
 		final String[] titles = { "Titel 1", "Titel 2", "Titel 3", "Titel 4",

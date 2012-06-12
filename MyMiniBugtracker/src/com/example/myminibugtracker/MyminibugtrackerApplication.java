@@ -84,49 +84,59 @@ public class MyminibugtrackerApplication extends Application implements
 	}
 
 	public void buttonClick(ClickEvent event) {
+
 		if (event.getButton() == addBugButton) {
-			this.dialogManager.showNotification(Messages
-					.getString("ui.mainwindow.notification.addBugClicked"),
-					Notification.TYPE_TRAY_NOTIFICATION);
+			// show add bug dialog
 			VerticalLayout vl = new VerticalLayout();
 			vl.addComponent(new BugForm(null, this));
 			this.dialogManager.showDialog(
 					Messages.getString("ui.form.BugForm.title.addBug"), vl,
 					"420px", "390px");
+
+			// show notification
+			this.dialogManager.showNotification(Messages
+					.getString("ui.mainwindow.notification.addBugClicked"),
+					Notification.TYPE_TRAY_NOTIFICATION);
+
 		} else if (event.getButton() == removeBugButton) {
-			// this.dialogManager.showYesNoDialog();
-			// Window yesNoDialog = new Window("Really Remove Bug?");
-			// HorizontalLayout hl = new HorizontalLayout();
-			// hl.setSpacing();
+			// show confirm dialog
 			final Bug bug = (Bug) bugList.getValue();
-			ConfirmDialog.show(getMainWindow(), "Delete Bug?:",
-					"Are you really sure that you want to delete this bug?",
-					"Delete", "Cancel", new ConfirmDialog.Listener() {
+			ConfirmDialog.show(getMainWindow(),
+					Messages.getString("ui.confirm.deleteBug.caption"),
+					Messages.getString("ui.confirm.deleteBug.message", new Object[]{bug.getTitle()}),
+					Messages.getString("ui.confirm.deleteBug.okCaption"),
+					Messages.getString("ui.confirm.deleteBug.cancelCaption"),
+					new ConfirmDialog.Listener() {
 
 						public void onClose(ConfirmDialog dialog) {
-			                if (dialog.isConfirmed()) {
-			                	// Confirmed to continue
-			                	getBugService().delete(bug);
-			                	bugList.removeItem(bug);
-			                } else {                    
-			                	// User did not confirm                    
-			                }
+							if (dialog.isConfirmed()) {
+								// Confirmed to continue
+								getBugService().delete(bug);
+								bugList.removeItem(bug);
+							} else {
+								// User did not confirm
+							}
 						}
 					});
-			
+			// show notification
 			this.dialogManager.showNotification(Messages
 					.getString("ui.mainwindow.notification.removeBugClicked"),
 					Notification.TYPE_TRAY_NOTIFICATION);
+
 		} else if (event.getSource() == editBugButton) {
-			this.dialogManager.showNotification(Messages
-					.getString("ui.mainwindow.notification.editBugClicked"),
-					Notification.TYPE_TRAY_NOTIFICATION);
+
+			// show editBug Dialog
 			Bug bug = (Bug) bugList.getValue();
 			VerticalLayout vl = new VerticalLayout();
 			vl.addComponent(new BugForm(bug, this));
 			this.dialogManager.showDialog(
 					Messages.getString("ui.form.BugForm.title.addBug"), vl,
 					"420px", "390px");
+
+			// show notification
+			this.dialogManager.showNotification(Messages
+					.getString("ui.mainwindow.notification.editBugClicked"),
+					Notification.TYPE_TRAY_NOTIFICATION);
 		}
 
 	}
