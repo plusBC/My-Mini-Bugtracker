@@ -173,7 +173,8 @@ die richtigen Werte gesetzt.
 Der nächste Bug an den ich mich ran mache ist, dass in der Tabelle mit Bugs BugStatus und BugType als Enum angezeigt werden. Ich möchte das dort der Titel der Enum angezeigt wird. Das ist ein easy Bug ^^ es wird in der Modelklasse jeweils eine zusätzliche 
 Methode benötigt getBugTypeTitle() die den Titel anhand des bugType Strings ermittelt. Anschließend muss nurnoch in der BugList werden die visibleColumns Liste durch den eintrag "bugTypeTitle" angepasst werden, schon fertig! Gleiches für den status. 
 
-
+Mir ist außerdem aufgefallen, dass beim Editieren eines Bugs die BugList nicht automatisch aktualisiert wird. Mal sehen wie ich das beheben kann... 
+Auch das war ganz einfach, Wenn der Bug sich bereits in der Liste befindet, muss er aus der Liste gelöscht werden und kann dann neu hinzugefügt werden.  
 
 
 

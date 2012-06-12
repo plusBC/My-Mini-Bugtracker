@@ -80,6 +80,9 @@ public class MyminibugtrackerApplication extends Application implements
 	}
 
 	public void addBugToBuglist(Bug bug) {
+		if (bugList.containsId(bug)){
+			bugList.removeItem(bug);
+		}
 		this.bugList.addItem(bug);
 	}
 
