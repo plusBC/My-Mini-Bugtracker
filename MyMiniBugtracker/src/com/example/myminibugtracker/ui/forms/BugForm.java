@@ -22,22 +22,20 @@ public class BugForm extends AbstractForm {
 	public BugForm(Bug bug, MyminibugtrackerApplication app) {
 		super(app);
 
-		String[] visiblePropertiesArray = { "title", "description", "bugType",
-				"status" };
-		BugFieldFactory fieldFactory = new BugFieldFactory(this);
-		setFormFieldFactory(fieldFactory);
+		String[] visiblePropertiesArray = { "title", "description" };
 		if (bug == null) {
 			bug = new Bug();
 		}
-		setFormDataSource(bug, Arrays.asList(visiblePropertiesArray));
 
-		ComboBox bugType = (ComboBox) getField("bugType");
-		bugType.select(bug.getBugType());
-		bugType.setImmediate(true);
-		System.out.println(bugType.getValue());
-		
-		addField("bugType", bugType);
-		// addField("status", fieldFactory.createBugStatusSelect());
+		BugFieldFactory fieldFactory = new BugFieldFactory(this, bug);
+		setFormFieldFactory(fieldFactory);
+
+		setFormDataSource(bug, Arrays.asList(visiblePropertiesArray));
+		ComboBox bugTypeBox = fieldFactory.createBugTypeSelect();
+		addField("bugType", bugTypeBox);
+
+		ComboBox bugStatusBox = fieldFactory.createBugStatusSelect();
+		addField("status", bugStatusBox);
 
 	}
 
@@ -47,11 +45,12 @@ public class BugForm extends AbstractForm {
 		commit();
 		BeanItem<Bug> item = (BeanItem<Bug>) getItemDataSource();
 		Bug bug = item.getBean();
-		// ComboBox comboBox = (ComboBox) this.getField("bugType");
-		// bug.setBugType(((BugType) comboBox.getValue()).getTitle());
-		//
-		// comboBox = (ComboBox) this.getField("status");
-		// bug.setStatus(((BugStatus) comboBox.getValue()).getTitle());
+
+		ComboBox comboBox = (ComboBox) this.getField("status");
+		bug.setStatus(comboBox.getValue().toString());
+
+		comboBox = (ComboBox) this.getField("bugType");
+		bug.setBugType(comboBox.getValue().toString());
 
 		app.getBugService().save(bug);
 		app.getDialogAndFormManager().hideDialog(this.getWindow());
@@ -67,9 +66,11 @@ public class BugForm extends AbstractForm {
 	class BugFieldFactory extends AbstractFieldFactory {
 
 		BugForm bugForm;
+		Bug bug;
 
-		public BugFieldFactory(BugForm bugForm) {
+		public BugFieldFactory(BugForm bugForm, Bug bug) {
 			this.bugForm = bugForm;
+			this.bug = bug;
 		}
 
 		@Override
@@ -95,51 +96,45 @@ public class BugForm extends AbstractForm {
 				return textField;
 			}
 
-			if ("bugType".equals(propertyId)) {
-				return createBugTypeSelect();
-			}
-
-			if ("status".equals(propertyId)) {
-				return createBugStatusSelect();
-			}
-
 			return super.createField(item, propertyId, uiContext);
 		}
 
 		public ComboBox createBugTypeSelect() {
 			// AUI hier bitte kein native select nehmen.. funktioniert das
-			// "normale"
-			// nicht?
+			// "normale" nicht?
 			// Plus: Welches "normale"? auf http://demo.vaadin.com/sampler wird
-			// das
-			// doch auch verwendet! Warum sollte das nicht verwendet werden?
-			// naja...
-			// ich nehm einfach mal die ComboBox
+			// das doch auch verwendet! Warum sollte das nicht verwendet werden?
+			// naja... ich nehm einfach mal die ComboBox
 			ComboBox bugTypeSelect = createComboBox(Messages
 					.getString("ui.form.BugForm.caption.type"));
 			BugType[] bugTypes = BugType.values();
 			for (BugType bugType : bugTypes) {
 				bugTypeSelect.addItem(bugType);
 				bugTypeSelect.setItemCaption(bugType, bugType.getTitle());
+				if (this.bug != null && bug.getBugType() != null
+						&& bug.getBugType().equals(bugType.toString())) {
+					bugTypeSelect.select(bugType);
+				}
 			}
 			return bugTypeSelect;
 		}
 
 		public ComboBox createBugStatusSelect() {
 			// AUI hier bitte kein native select nehmen.. funktioniert das
-			// "normale"
-			// nicht?
+			// "normale" nicht?
 			// Plus: Welches "normale"? auf http://demo.vaadin.com/sampler wird
-			// das
-			// doch auch verwendet! Warum sollte das nicht verwendet werden?
-			// naja...
-			// ich nehm einfach mal die ComboBox
+			// das doch auch verwendet! Warum sollte das nicht verwendet werden?
+			// naja... ich nehm einfach mal die ComboBox
 			ComboBox bugStatusSelect = createComboBox(Messages
 					.getString("ui.form.BugForm.caption.state"));
 			BugStatus[] bugStatus = BugStatus.values();
 			for (BugStatus bugState : bugStatus) {
 				bugStatusSelect.addItem(bugState);
 				bugStatusSelect.setItemCaption(bugState, bugState.getTitle());
+				if (this.bug != null && bug.getStatus() != null
+						&& bug.getStatus().equals(bugState.toString())) {
+					bugStatusSelect.select(bugState);
+				}
 			}
 			return bugStatusSelect;
 		}

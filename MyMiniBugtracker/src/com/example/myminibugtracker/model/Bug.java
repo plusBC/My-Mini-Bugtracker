@@ -5,6 +5,8 @@ import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 
+import com.example.myminibugtracker.model.enums.BugStatus;
+import com.example.myminibugtracker.model.enums.BugType;
 import com.example.myminibugtracker.services.Messages;
 
 public class Bug {
@@ -60,9 +62,27 @@ public class Bug {
 	public void setBugType(String bugType) {
 		this.bugType = bugType;
 	}
+	
+	public String getBugTypeTitle() {
+		for (BugType bugTypeValue : BugType.values()){
+			if (this.bugType != null && this.bugType.equals(bugTypeValue.toString())){
+				return bugTypeValue.getTitle();
+			}
+		}
+		return null;
+	}
 
 	public String getStatus() {
 		return status;
+	}
+	
+	public String getStatusTitle() {
+		for (BugStatus statusValue : BugStatus.values()){
+			if (this.status!= null && this.status.equals(statusValue.toString())){
+				return statusValue.getTitle();
+			}
+		}
+		return null;
 	}
 
 	public void setStatus(String status) {

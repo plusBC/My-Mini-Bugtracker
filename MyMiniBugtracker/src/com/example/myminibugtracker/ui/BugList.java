@@ -35,8 +35,8 @@ public class BugList extends AbstractBugList {
 		setContainerDataSource(bugContainer);
 
 		// set visible columns
-		final String[] VISIBLE_COL = new String[] { "title", "bugType",
-				"status", "creationDateAsString", "modificationDateAsString" };
+		final String[] VISIBLE_COL = new String[] { "title", "bugTypeTitle",
+				"statusTitle", "creationDateAsString", "modificationDateAsString" };
 		setVisibleColumns(VISIBLE_COL);
 
 		// set column headers
