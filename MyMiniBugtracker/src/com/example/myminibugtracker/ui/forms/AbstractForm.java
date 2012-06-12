@@ -28,6 +28,8 @@ public abstract class AbstractForm extends Form {
 
 		setWriteThrough(false);
 	}
+	
+	protected abstract boolean validateForm();
 
 	protected abstract void onClickSave();
 

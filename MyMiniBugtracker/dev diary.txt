@@ -159,6 +159,8 @@ Heute habe ich den Code etwas aufgeräumt und kommentiert. Insbesondere habe ich 
 2. Wie erreiche ich es am besten, dass das Datum abhängig von der Locale formatiert wird? Ich habe noch kein zufriedenstellendes Ergebnis und ich muss nochmal nach den "Best practices" recherchieren. 
 3. Bei Editieren eines Bugs wird die ComboBox ja noch nicht richtig gesetzt, sondern erscheint leer. Nachdem es wieder so spät war habe ich den versuch abgebrochen und werde ihn nächste Woche wieder aufnehmen. 
 
+
+
 12.06.2012 - Bugfixing
 
 Was mir momentan am meisten Kopfzerbrechen bereitet ist, dass die ComboBoxen beim editieren nicht gesetzt werden. Beim Debuggen habe ich herausgefunden, dass die Combobox wohl das richtige Item selektiert hat, mir es jedoch auf der GUI nicht angezeigt wird. 
@@ -176,5 +178,11 @@ Methode benötigt getBugTypeTitle() die den Titel anhand des bugType Strings ermi
 Mir ist außerdem aufgefallen, dass beim Editieren eines Bugs die BugList nicht automatisch aktualisiert wird. Mal sehen wie ich das beheben kann... 
 Auch das war ganz einfach, Wenn der Bug sich bereits in der Liste befindet, muss er aus der Liste gelöscht werden und kann dann neu hinzugefügt werden.  
 
+Als nächstes ärgert mich die Validierung der BugForm. Hier sind alles Pflichtfelder, allerdings wird beim Speichern immer nur eine Fehlermeldung angezeigt, auch wenn mehrere Felder Fehlerhaft sind. Ich bin mir nicht ganz sicher ob ich mir da evtl. eine Unsitte von 
+Zdenko angeeignet habe, aber es ist für meine Absichten jedenfalls Zweckmäßig. Ich schreibe für jedes Feld eine validate Methode in der ich auf leere Eingabefelder prüfe. Falls ein Feld leer ist, setze ich mit setComponentError(new UserError("message")) die Fehlermeldung. 
+Es wird nur gespeichert wenn alles Felder valide sind. 
 
+Und als kleiner Abschluss noch eine Usability Verbesserung: Wenn kein Bug in der Liste selektiert ist, sollen die Buttons "editieren" und "löschen" ausgegraut sein. Wenn ein Wert gewählt wird, werden sie aktiviert. Hierfür wurde der AbstractBugList ein SelectionChangeListener 
+hinzugefügt der die Methode onSelectionChange(Object value) ruft. Diese Methode kann in den Kindklassen implementiert werden. Wenn value == null buttons ausgrauen, andernfalls aktivieren.
 
+Wow, heute habe ich doch einiges erreicht! Nächste Woche werde ich mich wohl mal wieder mit der Datenbankproblematik beschäftigen.

@@ -58,8 +58,10 @@ public class MyminibugtrackerApplication extends Application implements
 		removeBugButton = new Button(
 				Messages.getString("ui.mainwindow.button.removeBug"));
 		removeBugButton.addListener(this);
+		removeBugButton.setEnabled(false);
 		editBugButton = new Button(
 				Messages.getString("ui.mainwindow.button.editBug"));
+		editBugButton.setEnabled(false);
 		editBugButton.addListener(this);
 
 		actionsButtonBar.addComponent(addBugButton);
@@ -69,6 +71,14 @@ public class MyminibugtrackerApplication extends Application implements
 		mainWindow.addComponent(actionsButtonBar);
 		setMainWindow(mainWindow);
 
+	}
+	
+	public Button getEditBugButton(){
+		return editBugButton;
+	}
+	
+	public Button getRemoveBugButton(){
+		return removeBugButton;
 	}
 
 	public DialogAndFormManager getDialogAndFormManager() {
@@ -80,7 +90,7 @@ public class MyminibugtrackerApplication extends Application implements
 	}
 
 	public void addBugToBuglist(Bug bug) {
-		if (bugList.containsId(bug)){
+		if (bugList.containsId(bug)) {
 			bugList.removeItem(bug);
 		}
 		this.bugList.addItem(bug);
@@ -104,27 +114,32 @@ public class MyminibugtrackerApplication extends Application implements
 		} else if (event.getButton() == removeBugButton) {
 			// show confirm dialog
 			final Bug bug = (Bug) bugList.getValue();
-			ConfirmDialog.show(getMainWindow(),
-					Messages.getString("ui.confirm.deleteBug.caption"),
-					Messages.getString("ui.confirm.deleteBug.message", new Object[]{bug.getTitle()}),
-					Messages.getString("ui.confirm.deleteBug.okCaption"),
-					Messages.getString("ui.confirm.deleteBug.cancelCaption"),
-					new ConfirmDialog.Listener() {
+			if (bug != null) {
+				ConfirmDialog.show(getMainWindow(),
 
-						public void onClose(ConfirmDialog dialog) {
-							if (dialog.isConfirmed()) {
-								// Confirmed to continue
-								getBugService().delete(bug);
-								bugList.removeItem(bug);
-							} else {
-								// User did not confirm
+				Messages.getString("ui.confirm.deleteBug.caption"), Messages
+						.getString("ui.confirm.deleteBug.message",
+								new Object[] { bug.getTitle() }), Messages
+						.getString("ui.confirm.deleteBug.okCaption"), Messages
+						.getString("ui.confirm.deleteBug.cancelCaption"),
+						new ConfirmDialog.Listener() {
+
+							public void onClose(ConfirmDialog dialog) {
+								if (dialog.isConfirmed()) {
+									// Confirmed to continue
+									getBugService().delete(bug);
+									bugList.removeItem(bug);
+								} else {
+									// User did not confirm
+								}
 							}
-						}
-					});
-			// show notification
-			this.dialogManager.showNotification(Messages
-					.getString("ui.mainwindow.notification.removeBugClicked"),
-					Notification.TYPE_TRAY_NOTIFICATION);
+						});
+				// show notification
+				this.dialogManager
+						.showNotification(
+								Messages.getString("ui.mainwindow.notification.removeBugClicked"),
+								Notification.TYPE_TRAY_NOTIFICATION);
+			}
 
 		} else if (event.getSource() == editBugButton) {
 

@@ -2,6 +2,8 @@ package com.example.myminibugtracker.ui.forms;
 
 import java.util.Arrays;
 
+import org.apache.commons.lang.StringUtils;
+
 import com.example.myminibugtracker.MyminibugtrackerApplication;
 import com.example.myminibugtracker.model.Bug;
 import com.example.myminibugtracker.model.enums.BugStatus;
@@ -9,6 +11,7 @@ import com.example.myminibugtracker.model.enums.BugType;
 import com.example.myminibugtracker.services.Messages;
 import com.vaadin.data.Item;
 import com.vaadin.data.util.BeanItem;
+import com.vaadin.terminal.UserError;
 import com.vaadin.ui.ComboBox;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.Field;
@@ -40,21 +43,96 @@ public class BugForm extends AbstractForm {
 	}
 
 	@Override
+	protected boolean validateForm() {
+		boolean valid = true;
+		valid &= validateTitle();
+		valid &= validateDescription();
+		valid &= validateStatus();
+		valid &= validateBugType();
+		return valid;
+	}
+
+	private boolean validateTitle() {
+		boolean valid = true;
+		TextField title = (TextField) getField("title");
+		String titleValue = (String) title.getValue();
+		if (StringUtils.isBlank(titleValue)) {
+			title.setComponentError(new UserError("title mustn't be empty"));
+			valid = false;
+		}
+
+		if (valid) {
+			title.setComponentError(null);
+		}
+
+		return valid;
+	}
+
+	private boolean validateDescription() {
+		boolean valid = true;
+		TextField description = (TextField) getField("description");
+		String descriptionValue = (String) description.getValue();
+		if (StringUtils.isBlank(descriptionValue)) {
+			description.setComponentError(new UserError(
+					"description mustn't be empty"));
+			valid = false;
+		}
+
+		if (valid) {
+			description.setComponentError(null);
+		}
+
+		return valid;
+	}
+
+	private boolean validateStatus() {
+		boolean valid = true;
+		ComboBox status = (ComboBox) getField("status");
+		BugStatus statusValue = (BugStatus) status.getValue();
+		if (statusValue == null) {
+			status.setComponentError(new UserError("Please select a status"));
+			valid = false;
+		}
+
+		if (valid) {
+			status.setComponentError(null);
+		}
+		return valid;
+	}
+
+	private boolean validateBugType() {
+		boolean valid = true;
+		ComboBox bugType = (ComboBox) getField("bugType");
+		BugType bugTypeValue = (BugType) bugType.getValue();
+		if (bugTypeValue == null) {
+			bugType.setComponentError(new UserError("Please select a bug type"));
+			valid = false;
+		}
+
+		if (valid) {
+			bugType.setComponentError(null);
+		}
+		return valid;
+	}
+
+	@Override
 	protected void onClickSave() {
-		// TODO: Hier wird momentan nur eine einzige Fehlermessage angezeigt...
-		commit();
-		BeanItem<Bug> item = (BeanItem<Bug>) getItemDataSource();
-		Bug bug = item.getBean();
 
-		ComboBox comboBox = (ComboBox) this.getField("status");
-		bug.setStatus(comboBox.getValue().toString());
+		if (validateForm()) {
+			commit();
+			BeanItem<Bug> item = (BeanItem<Bug>) getItemDataSource();
+			Bug bug = item.getBean();
 
-		comboBox = (ComboBox) this.getField("bugType");
-		bug.setBugType(comboBox.getValue().toString());
+			ComboBox comboBox = (ComboBox) this.getField("status");
+			bug.setStatus(comboBox.getValue().toString());
 
-		app.getBugService().save(bug);
-		app.getDialogAndFormManager().hideDialog(this.getWindow());
-		app.addBugToBuglist(bug);
+			comboBox = (ComboBox) this.getField("bugType");
+			bug.setBugType(comboBox.getValue().toString());
+
+			app.getBugService().save(bug);
+			app.getDialogAndFormManager().hideDialog(this.getWindow());
+			app.addBugToBuglist(bug);
+		}
 	}
 
 	@Override
@@ -81,7 +159,6 @@ public class BugForm extends AbstractForm {
 				TextField title = createTextField(
 						Messages.getString("ui.form.BugForm.caption.title"),
 						true);
-				title.setRequiredError("Title necessarry");
 				return title;
 			}
 
@@ -92,7 +169,6 @@ public class BugForm extends AbstractForm {
 				// ich kann leider hier keine TextArea verwenden, also
 				// workaround
 				textField.setRows(10);
-				textField.setRequiredError("Description required");
 				return textField;
 			}
 

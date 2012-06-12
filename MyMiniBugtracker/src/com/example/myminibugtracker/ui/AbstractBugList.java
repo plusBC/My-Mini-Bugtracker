@@ -1,6 +1,7 @@
 package com.example.myminibugtracker.ui;
 
 import com.example.myminibugtracker.MyminibugtrackerApplication;
+import com.vaadin.data.Property;
 import com.vaadin.event.ItemClickEvent;
 import com.vaadin.event.ItemClickEvent.ItemClickListener;
 import com.vaadin.ui.Table;
@@ -33,9 +34,11 @@ public abstract class AbstractBugList extends Table {
 		// allow disabling column headers
 		setColumnReorderingAllowed(true);
 		addListener(new MyItemClickListener());
+		addListener(new MyValueChangeListener());
 	}
 
 	protected abstract void onDoubleClick(Object itemId);
+	protected abstract void onSelectionChange(Object value);
 
 	class MyItemClickListener implements ItemClickListener {
 		public void itemClick(ItemClickEvent event) {
@@ -44,6 +47,15 @@ public abstract class AbstractBugList extends Table {
 			}
 
 		}
+	}
+	
+	class MyValueChangeListener implements ValueChangeListener {
+
+		public void valueChange(Property.ValueChangeEvent event) {
+			Object value = getValue();
+			onSelectionChange(value);
+		}
+		
 	}
 
 }

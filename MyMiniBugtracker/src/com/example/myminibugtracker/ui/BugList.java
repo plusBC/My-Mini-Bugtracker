@@ -36,7 +36,8 @@ public class BugList extends AbstractBugList {
 
 		// set visible columns
 		final String[] VISIBLE_COL = new String[] { "title", "bugTypeTitle",
-				"statusTitle", "creationDateAsString", "modificationDateAsString" };
+				"statusTitle", "creationDateAsString",
+				"modificationDateAsString" };
 		setVisibleColumns(VISIBLE_COL);
 
 		// set column headers
@@ -53,16 +54,29 @@ public class BugList extends AbstractBugList {
 	@Override
 	protected void onDoubleClick(Object itemId) {
 
-		//show editBug dialog
+		// show editBug dialog
 		VerticalLayout vl = new VerticalLayout();
 		vl.addComponent(new BugForm((Bug) itemId, app));
 		app.getDialogAndFormManager().showDialog(
 				Messages.getString("ui.form.BugForm.title.addBug"), vl,
 				"420px", "390px");
-		
-		//show notification
+
+		// show notification
 		app.getDialogAndFormManager().showNotification("bug double clicked",
 				Notification.TYPE_TRAY_NOTIFICATION);
+
+	}
+
+	@Override
+	protected void onSelectionChange(Object value) {
+
+		if (value != null) {
+			this.app.getEditBugButton().setEnabled(true);
+			this.app.getRemoveBugButton().setEnabled(true);
+		} else {
+			this.app.getEditBugButton().setEnabled(false);
+			this.app.getRemoveBugButton().setEnabled(false);
+		}
 
 	}
 
