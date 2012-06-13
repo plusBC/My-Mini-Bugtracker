@@ -1,5 +1,6 @@
 package com.example.myminibugtracker;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Configurable;
 import org.vaadin.dialogs.ConfirmDialog;
 
@@ -28,7 +29,10 @@ public class MyminibugtrackerApplication extends Application implements
 	private Button addBugButton;
 	private Button editBugButton;
 	private Button removeBugButton;
+	
+	@Autowired
 	private BugService bugService;
+	
 	private BugList bugList;
 
 	@Override
@@ -40,7 +44,7 @@ public class MyminibugtrackerApplication extends Application implements
 
 		this.dialogManager = new DialogAndFormManager(this);
 		// TODO: irgendwie mit Spring und Autowiring lösen
-		this.bugService = new BugServiceImpl();
+//		this.bugService = new BugServiceImpl();
 
 		Window mainWindow = new Window(
 				Messages.getString("ui.mainwindow.title"));
