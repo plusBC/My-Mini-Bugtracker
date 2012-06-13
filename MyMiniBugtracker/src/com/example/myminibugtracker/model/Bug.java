@@ -19,6 +19,7 @@ public class Bug {
 	private long creationDate;
 	private long modificationDate;
 
+	// (AUI) Achtung, Haarspalterei! ;) Dies ist eigentlich kein "Date" sondern ein "Timestamp"
 	public long getCreationDate() {
 		return creationDate;
 	}

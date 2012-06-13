@@ -149,6 +149,8 @@ public class BugForm extends AbstractForm {
 		BugForm bugForm;
 		Bug bug;
 
+		// (AUI) Ich meine, du brauchst hier die Referenz auf BugForm nicht, da es ja eine innere Klasse ist.
+		//				http://openbook.galileodesign.de/javainsel5/javainsel06_011.htm#Rxx747java06011040001EC1F02610D
 		public BugFieldFactory(BugForm bugForm, Bug bug) {
 			this.bugForm = bugForm;
 			this.bug = bug;

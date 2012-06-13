@@ -3,6 +3,7 @@ package com.example.myminibugtracker.services;
 import java.util.MissingResourceException;
 import java.util.ResourceBundle;
 
+// (AUI) Du kannst gerne die Codebank und den darin enthaltenen RM nehmen, falls dir das hilft.
 public class Messages {
 	private static final String BUNDLE_NAME = "messages"; 
 

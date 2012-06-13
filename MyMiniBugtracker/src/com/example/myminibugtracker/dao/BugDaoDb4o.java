@@ -12,6 +12,9 @@ import com.db4o.Db4oEmbedded;
 import com.db4o.ObjectContainer;
 import com.example.myminibugtracker.model.Bug;
 
+// (AUI) Es gibt für Spring eine db4o Anbindung, so dass sich der ObjectContainer im application-context
+//				konfigurieren laesst und guten Transaction-Support bietet. 
+//				http://www.springsource.org/extensions/se-db4o
 public class BugDaoDb4o implements BugDao {
 
 	final String FILENAME = "D:\\Temp\\Databases\\MyBugTracker.yap";
@@ -80,6 +83,8 @@ public class BugDaoDb4o implements BugDao {
 			DB.commit();
 			
 			//TODO Datum formatieren zentralisieren und in Abhängigkeit der Locale des benutzers formatieren
+			// (AUI) Solche Ausgaben werden über einen Logger gemacht. Der kann konfiguriert werden, dass der Zeitpunkt
+			//				mitgeloggt wird. Also kein DateFormatter hier!
 			DateTimeFormatter formatter = DateTimeFormat
 					.forPattern("dd.MM.YYYY HH:mm:ss");
 			System.out.println("Bug with id: " + bug.getId() + " deleted at: " + DateTime.now().toString(formatter));

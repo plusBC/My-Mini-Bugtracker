@@ -38,6 +38,11 @@ public class BugContainer extends BeanItemContainer<Bug> implements
 	}
 
 	public static BugContainer createWithTestData() {
+		
+		// (AUI) wenn du mit Testdaten arbeiten möchtest, dann kannst du besser ein entsprechendes
+		// 				"BugDaoSampleData" oder so anlegen, wo die Daten von unten verwendet werden
+		//				Später tauscht man dann einfach das DAO gegen ein echtes aus und muss hier nix ändern!
+		
 		final String[] titles = { "Titel 1", "Titel 2", "Titel 3", "Titel 4",
 				"Titel 5" };
 		// final String[] descriptions = { "description 1", "description 2",
