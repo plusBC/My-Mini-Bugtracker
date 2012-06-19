@@ -2,18 +2,15 @@ package com.example.myminibugtracker.services;
 
 import java.util.Collection;
 
+import org.springframework.beans.factory.annotation.Autowired;
+
 import com.example.myminibugtracker.dao.BugDao;
-import com.example.myminibugtracker.dao.BugDaoDb4o;
 import com.example.myminibugtracker.model.Bug;
 
 public class BugServiceImpl implements BugService {
 
-	// TODO: irgendwie mit Spring und Autowiring lösen
+	@Autowired
 	BugDao bugDao;
-
-	public BugServiceImpl() {
-		this.bugDao = new BugDaoDb4o();
-	}
 
 	public Collection<Bug> getAll() {
 		return bugDao.findAllBugs();

@@ -186,3 +186,33 @@ Und als kleiner Abschluss noch eine Usability Verbesserung: Wenn kein Bug in der
 hinzugefügt der die Methode onSelectionChange(Object value) ruft. Diese Methode kann in den Kindklassen implementiert werden. Wenn value == null buttons ausgrauen, andernfalls aktivieren.
 
 Wow, heute habe ich doch einiges erreicht! Nächste Woche werde ich mich wohl mal wieder mit der Datenbankproblematik beschäftigen.
+
+
+19.06.2012 - Ueberarbeiten Kommentare Aui
+Aui hat vergangene Woche sich das Projekt nochmal angeschaut und an einigen Stellen wieder Verbesserungskommentare eingefuegt. Die Kommentare werde ich mir heute ansehen und abarbeiten. Außerdem hat Aui sich das Autowiring Problem mal angesehen und Autowiring gängisch gemacht. 
+Diese Änderungen will ich mir auch mal näher ansehen.  
+
+Ich beginne mit der Überarbeitung des BugDao hier meinte Aui es gäbe in Spring bereits eine db4o Anbindung über die sich der ObjectContainer konfigurieren lässt (http://www.springsource.org/extensions/se-db4o). Also auf gehts, gleich  mal anschauen wie das funktioniert. 
+Hmm... irgendwie mangelt es mir hier an Dokumentation. Wie konfiguriere ich das denn richtig? Nach einigem Suchen bin ich auf Beispielcode gestoßen der vielversprechend aussieht. 
+
+https://github.com/astubbs/spring-modules/blob/master/samples/db4o/recipemanager/src/webapp/WEB-INF/applicationContext-db4o.xml
+
+Allerdings muss ich das spring-module als dependency einbinden. Also schnell mal ins maven Repository schauen: 
+
+http://mvnrepository.com/artifact/org.springmodules 
+
+
+Na prima! Es könnte doch einfach mal glatt laufen. Die Dependency kann nicht eingebunden werdne. Scheint so als würde eine bestimmte db4o-Version (6.1-java1.2) voraussetzten, diese aber nicht im Repository finden... Wie kann ich das umgehen? 
+Im Repository kann ich das .jar File direkt runterladen, evtl. kann ich ja einfach händisch dem Projekt hinzufügen. Aber was ist dann wohl mit den Abhängigkeiten? Einfach mal ausprobieren... Springmodules hinzugefügt, und den Application-Context wie im Beispielcode angepasst 
+ - direkt wieder ein Fehler com.db4o.ext.MemoryFile wird nicht gefunden.
+Gibt es das denn in der aktuellen Db4o Version nicht? - NEIN! siehe auch: 
+
+http://community.versant.com/documentation/reference/db4o-8.1/java/api/overview-tree.html und http://community.versant.com/documentation/reference/db4o-6.1/java/api/overview-tree.html
+
+Also auch noch das händisch einbinden... Was läuft immer noch nicht? Gleich nochmal mit dem Beispielcode vergleichen. Oh, das DAO sieht ganz anders aus: 
+1. Erbt es von Db4oDaoSupport (hierfür benötige ich offensichtlich eine weitere Spring dependency)
+2. Es wird nicht mehr auf den ObjectContainer, sondern auf einem db4o Template gearbeitet. 
+
+Das habe ich jetzt auch mal eingebaut. UND ES FUNKTIONIERT!!! *HERUMHÜPFT*
+
+Das ist ein Guter Zeitpunkt um für heute Feierabend zu machen. Um die anderen Anmerkungen kümmere ich mich dann nächste Woche. 

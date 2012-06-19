@@ -6,7 +6,6 @@ import org.vaadin.dialogs.ConfirmDialog;
 
 import com.example.myminibugtracker.model.Bug;
 import com.example.myminibugtracker.services.BugService;
-import com.example.myminibugtracker.services.BugServiceImpl;
 import com.example.myminibugtracker.services.Messages;
 import com.example.myminibugtracker.ui.BugList;
 import com.example.myminibugtracker.ui.forms.BugForm;
@@ -29,6 +28,7 @@ public class MyminibugtrackerApplication extends Application implements
 	private Button addBugButton;
 	private Button editBugButton;
 	private Button removeBugButton;
+	//TODO Logger konfigurieren
 	
 	@Autowired
 	private BugService bugService;
@@ -43,8 +43,6 @@ public class MyminibugtrackerApplication extends Application implements
 				.getLocale());
 
 		this.dialogManager = new DialogAndFormManager(this);
-		// TODO: irgendwie mit Spring und Autowiring lösen
-//		this.bugService = new BugServiceImpl();
 
 		Window mainWindow = new Window(
 				Messages.getString("ui.mainwindow.title"));

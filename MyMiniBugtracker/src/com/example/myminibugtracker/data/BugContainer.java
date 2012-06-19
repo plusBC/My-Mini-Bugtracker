@@ -1,13 +1,11 @@
 package com.example.myminibugtracker.data;
 
 import java.io.Serializable;
-import java.util.List;
 import java.util.Random;
 
 import com.example.myminibugtracker.model.Bug;
 import com.example.myminibugtracker.model.enums.BugStatus;
 import com.example.myminibugtracker.model.enums.BugType;
-import com.example.myminibugtracker.services.Messages;
 import com.vaadin.data.util.BeanItemContainer;
 
 /*

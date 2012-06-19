@@ -1,112 +1,42 @@
 package com.example.myminibugtracker.dao;
 
-import java.io.File;
-import java.io.IOException;
 import java.util.Collection;
-
-import org.joda.time.DateTime;
-import org.joda.time.format.DateTimeFormat;
-import org.joda.time.format.DateTimeFormatter;
-
-import com.db4o.Db4oEmbedded;
-import com.db4o.ObjectContainer;
+import org.springmodules.db4o.support.Db4oDaoSupport;
 import com.example.myminibugtracker.model.Bug;
 
-// (AUI) Es gibt für Spring eine db4o Anbindung, so dass sich der ObjectContainer im application-context
-//				konfigurieren laesst und guten Transaction-Support bietet. 
-//				http://www.springsource.org/extensions/se-db4o
-public class BugDaoDb4o implements BugDao {
-
-	final String FILENAME = "D:\\Temp\\Databases\\MyBugTracker.yap";
-	final ObjectContainer DB;
-
-	// haesslicher workaround weil ich sonst nicht alle Objekte aus der DB lesen
-	// kann (com.db4o.ext.DatabaseClosedException)
-
-	public BugDaoDb4o() {
-		createDBFileIfMissing();
-		DB = Db4oEmbedded.openFile(Db4oEmbedded.newConfiguration(), FILENAME);
-	}
+public class BugDaoDb4o extends Db4oDaoSupport implements BugDao {
 
 	public Collection<Bug> findAllBugs() {
-		// createDatabaseFileIfMissing();
-
-		// TODO: ich verstehs schon wieder mal nicht...
-		// aus irgendwelchen gründen koennen alle bugs aus der ausgelesen werden
-		// und werden auch in der Tabelle angezeigt wenn ich die DB nicht
-		// schließe.
-		// versuche ich das close aufzurufen wird ne exception geworfen,
-		// lass ich die DB offen kommt beim speichern der tickets ne
-		// exception...
-		// ObjectContainer db = openDB();
-
-		Collection<Bug> bugs = null;
-		try {
-			bugs = DB.queryByExample(Bug.class);
-
-		} finally {
-			// there is an exception thrown if i try to close the db...
-			// WTF WHY??
-			// db.close();
-		}
-		return bugs;
+		return getDb4oTemplate().get(Bug.class);
 
 	}
 
 	public void persist(Bug bug) {
-		// ObjectContainer db = openDB();
-		try {
-			bug.setId("" + System.currentTimeMillis());
-			DB.store(bug);
-			DB.commit();
-			System.out.println("Bug with id " + bug.getId() + " created at: " + bug.getCreationDateAsString());
-		} finally {
-			// db.close();
-		}
+		getDb4oTemplate().set(bug);
+
 	}
 
 	public void update(Bug bug) {
-		try {
-			DB.store(bug);
-			DB.commit();
-			System.out.println("Bug with id: " + bug.getId() + " updated at: " + bug.getModificationDateAsString());
-
-		} finally {
-			// db.close()
-		}
+		getDb4oTemplate().set(bug);
 
 	}
 
 	public void remove(Bug bug) {
-		try {
-			DB.delete(bug);
-			DB.commit();
-			
-			//TODO Datum formatieren zentralisieren und in Abhängigkeit der Locale des benutzers formatieren
-			// (AUI) Solche Ausgaben werden über einen Logger gemacht. Der kann konfiguriert werden, dass der Zeitpunkt
-			//				mitgeloggt wird. Also kein DateFormatter hier!
-			DateTimeFormatter formatter = DateTimeFormat
-					.forPattern("dd.MM.YYYY HH:mm:ss");
-			System.out.println("Bug with id: " + bug.getId() + " deleted at: " + DateTime.now().toString(formatter));
-		}finally {
-			// db.close();
-		}
+		getDb4oTemplate().delete(bug);
+		// try {
+		// DB.delete(bug);
+		// DB.commit();
+		//
+		// //TODO Datum formatieren zentralisieren und in Abhängigkeit der Locale des benutzers formatieren
+		// // (AUI) Solche Ausgaben werden über einen Logger gemacht. Der kann konfiguriert werden, dass der Zeitpunkt
+		// // mitgeloggt wird. Also kein DateFormatter hier!
+		// DateTimeFormatter formatter = DateTimeFormat.forPattern("dd.MM.YYYY HH:mm:ss");
+		// System.out.println("Bug with id: " + bug.getId() + " deleted at: " +
+		// DateTime.now().toString(formatter));
+		// }finally {
+		// // db.close();
+		// }
 
 	}
-
-	private void createDBFileIfMissing() {
-		File file = new File(FILENAME);
-		try {
-			file.createNewFile();
-		} catch (IOException e) {
-			e.printStackTrace();
-			throw new RuntimeException("could not create databasefile ");
-		}
-
-	}
-
-	// private ObjectContainer openDB() {
-	// return Db4oEmbedded.openFile(Db4oEmbedded.newConfiguration(), FILENAME);
-	// }
 
 }
