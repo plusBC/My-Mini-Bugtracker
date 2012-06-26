@@ -133,6 +133,7 @@ Ich stelle fest dass bei einem commit des Formulars nicht alle felder gleichzeit
 Commit noch selbst übernehmen. 
 
 
+
 29.05.2012 - Db4o CRUD
 
 Heute möchte ich dringend irgendwelche Fortschritte sehen und mich nicht mit irgendwelchen konfigurationen rumschlagen müssen. Als heutiges Ziel habe ich mir gesteckt, mal richtig auf einer DB4O Datenbank zu arbeiten. 
@@ -188,7 +189,9 @@ hinzugefügt der die Methode onSelectionChange(Object value) ruft. Diese Methode 
 Wow, heute habe ich doch einiges erreicht! Nächste Woche werde ich mich wohl mal wieder mit der Datenbankproblematik beschäftigen.
 
 
+
 19.06.2012 - Überarbeiten Kommentare Aui
+
 Aui hat vergangene Woche sich das Projekt nochmal angeschaut und an einigen Stellen wieder Verbesserungskommentare eingefuegt. Die Kommentare werde ich mir heute ansehen und abarbeiten. Außerdem hat Aui sich das Autowiring Problem mal angesehen und Autowiring gängisch gemacht. 
 Diese Änderungen will ich mir auch mal näher ansehen.  
 
@@ -218,7 +221,9 @@ Das habe ich jetzt auch mal eingebaut. UND ES FUNKTIONIERT!!! *HERUMHÜPFT*
 Das ist ein Guter Zeitpunkt um für heute Feierabend zu machen. Um die anderen Anmerkungen kümmere ich mich dann nächste Woche. 
 
 
+
 26.06.2012 - Überarbeiten Kommentare Aui (Fortsetzung)
+
 Ich beginne mit der Überarbeitung der Messages. Aui hat mir erlaubt die Codebank und die darin enthaltene RM Klasse zu verwenden. Ich füge also erstmal das .jar dem Deployment Assembly und dem Build Path hinzu. Hat soweit ganz gut funktioniert. Jetzt muss ich die RM Klasse 
 nur noch richtig konfigurieren. Im DMS konnten haben wir das glaube ich über autowiring erledigt. Mal ausprobieren ob ich das hinbekomm..
 
@@ -231,7 +236,7 @@ demnächst noch was besseres ein. Den Titel kann ich ja auch nicht speichern, da 
 
 Ein ähnliches Problem besteht auch bei der Formatierung des Datums prinzipiell würde ich gerne das RM nehmen, aber über die Modelklasse wird das nicht funktionieren. Hmm... Was sagt eigentlich Vaadin zur Internationalisierung von Datumsangaben in einer Tabelle?
 
-Ach, das Löst ja all meine Probleme ^.^: 
+Ach, das löst ja all meine Probleme ^.^: 
 https://vaadin.com/forum/-/message_boards/view_message/19014
 
 Es wird in der BugList eine zusätzliche Methode benötigt, die eine Methode formatPropertyValue(Object rowId, Object colId, Property property) aus der Tabelle überschreibt. Hier kann dann anhand der colId die Formatierung der property vorgenommen werden. Die getXYAsString()  
