@@ -4,6 +4,9 @@
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/src"/>
         <wb-resource deploy-path="/" source-path="/target/m2e-wtp/web-resources"/>
         <wb-resource deploy-path="/" source-path="/WebContent"/>
+        <dependent-module archiveName="codebank-1.0.22.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/lib/D:/bc/codebank/target/codebank-1.0.22.jar">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
         <property name="context-root" value="MyMiniBugtracker"/>
         <property name="java-output-path" value="/MyMiniBugtracker/build/classes"/>
     </wb-module>

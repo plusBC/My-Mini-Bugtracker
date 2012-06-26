@@ -6,12 +6,10 @@ import org.vaadin.dialogs.ConfirmDialog;
 
 import com.example.myminibugtracker.model.Bug;
 import com.example.myminibugtracker.services.BugService;
-import com.example.myminibugtracker.services.Messages;
 import com.example.myminibugtracker.ui.BugList;
 import com.example.myminibugtracker.ui.forms.BugForm;
 import com.example.myminibugtracker.ui.managers.DialogAndFormManager;
 import com.vaadin.Application;
-import com.vaadin.terminal.gwt.server.WebApplicationContext;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Button.ClickListener;
@@ -19,6 +17,8 @@ import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.Window;
 import com.vaadin.ui.Window.Notification;
+
+import de.byteconsult.codebank.i18n.RM;
 
 @Configurable(preConstruction = true)
 public class MyminibugtrackerApplication extends Application implements
@@ -28,24 +28,23 @@ public class MyminibugtrackerApplication extends Application implements
 	private Button addBugButton;
 	private Button editBugButton;
 	private Button removeBugButton;
-	//TODO Logger konfigurieren
-	
+	// TODO Logger konfigurieren
+
 	@Autowired
 	private BugService bugService;
-	
+
+	@Autowired
+	private RM rm;
+
 	private BugList bugList;
 
 	@Override
 	public void init() {
 
 		// prepare
-		setLocale(((WebApplicationContext) getContext()).getBrowser()
-				.getLocale());
-
 		this.dialogManager = new DialogAndFormManager(this);
 
-		Window mainWindow = new Window(
-				Messages.getString("ui.mainwindow.title"));
+		Window mainWindow = new Window(rm.message("ui.mainwindow.title"));
 
 		this.bugList = new BugList(this);
 		mainWindow.addComponent(bugList);
@@ -54,15 +53,13 @@ public class MyminibugtrackerApplication extends Application implements
 		HorizontalLayout actionsButtonBar = new HorizontalLayout();
 		actionsButtonBar.setSpacing(true);
 
-		addBugButton = new Button(
-				Messages.getString("ui.mainwindow.button.addBug"));
+		addBugButton = new Button(rm.message("ui.mainwindow.button.addBug"));
 		addBugButton.addListener(this);
 		removeBugButton = new Button(
-				Messages.getString("ui.mainwindow.button.removeBug"));
+				rm.message("ui.mainwindow.button.removeBug"));
 		removeBugButton.addListener(this);
 		removeBugButton.setEnabled(false);
-		editBugButton = new Button(
-				Messages.getString("ui.mainwindow.button.editBug"));
+		editBugButton = new Button(rm.message("ui.mainwindow.button.editBug"));
 		editBugButton.setEnabled(false);
 		editBugButton.addListener(this);
 
@@ -74,12 +71,12 @@ public class MyminibugtrackerApplication extends Application implements
 		setMainWindow(mainWindow);
 
 	}
-	
-	public Button getEditBugButton(){
+
+	public Button getEditBugButton() {
 		return editBugButton;
 	}
-	
-	public Button getRemoveBugButton(){
+
+	public Button getRemoveBugButton() {
 		return removeBugButton;
 	}
 
@@ -89,6 +86,10 @@ public class MyminibugtrackerApplication extends Application implements
 
 	public BugService getBugService() {
 		return this.bugService;
+	}
+	
+	public RM getRM(){
+		return this.rm;
 	}
 
 	public void addBugToBuglist(Bug bug) {
@@ -105,12 +106,12 @@ public class MyminibugtrackerApplication extends Application implements
 			VerticalLayout vl = new VerticalLayout();
 			vl.addComponent(new BugForm(null, this));
 			this.dialogManager.showDialog(
-					Messages.getString("ui.form.BugForm.title.addBug"), vl,
-					"420px", "390px");
+					rm.message("ui.form.BugForm.title.addBug"), vl, "420px",
+					"390px");
 
 			// show notification
-			this.dialogManager.showNotification(Messages
-					.getString("ui.mainwindow.notification.addBugClicked"),
+			this.dialogManager.showNotification(
+					rm.message("ui.mainwindow.notification.addBugClicked"),
 					Notification.TYPE_TRAY_NOTIFICATION);
 
 		} else if (event.getButton() == removeBugButton) {
@@ -119,11 +120,11 @@ public class MyminibugtrackerApplication extends Application implements
 			if (bug != null) {
 				ConfirmDialog.show(getMainWindow(),
 
-				Messages.getString("ui.confirm.deleteBug.caption"), Messages
-						.getString("ui.confirm.deleteBug.message",
-								new Object[] { bug.getTitle() }), Messages
-						.getString("ui.confirm.deleteBug.okCaption"), Messages
-						.getString("ui.confirm.deleteBug.cancelCaption"),
+				rm.message("ui.confirm.deleteBug.caption"), rm.message(
+						"ui.confirm.deleteBug.message",
+						new Object[] { bug.getTitle() }), rm
+						.message("ui.button.ok"), rm
+						.message("ui.button.cancel"),
 						new ConfirmDialog.Listener() {
 
 							public void onClose(ConfirmDialog dialog) {
@@ -139,7 +140,7 @@ public class MyminibugtrackerApplication extends Application implements
 				// show notification
 				this.dialogManager
 						.showNotification(
-								Messages.getString("ui.mainwindow.notification.removeBugClicked"),
+								rm.message("ui.mainwindow.notification.removeBugClicked"),
 								Notification.TYPE_TRAY_NOTIFICATION);
 			}
 
@@ -150,12 +151,12 @@ public class MyminibugtrackerApplication extends Application implements
 			VerticalLayout vl = new VerticalLayout();
 			vl.addComponent(new BugForm(bug, this));
 			this.dialogManager.showDialog(
-					Messages.getString("ui.form.BugForm.title.addBug"), vl,
-					"420px", "390px");
+					rm.message("ui.form.BugForm.title.addBug"), vl, "420px",
+					"390px");
 
 			// show notification
-			this.dialogManager.showNotification(Messages
-					.getString("ui.mainwindow.notification.editBugClicked"),
+			this.dialogManager.showNotification(
+					rm.message("ui.mainwindow.notification.editBugClicked"),
 					Notification.TYPE_TRAY_NOTIFICATION);
 		}
 

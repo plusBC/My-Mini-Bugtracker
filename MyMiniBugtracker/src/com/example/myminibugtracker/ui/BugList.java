@@ -2,11 +2,17 @@ package com.example.myminibugtracker.ui;
 
 import java.util.Collection;
 
+import org.joda.time.DateTimeZone;
+
 import com.example.myminibugtracker.MyminibugtrackerApplication;
 import com.example.myminibugtracker.data.BugContainer;
 import com.example.myminibugtracker.model.Bug;
-import com.example.myminibugtracker.services.Messages;
+import com.example.myminibugtracker.model.enums.BugStatus;
+import com.example.myminibugtracker.model.enums.BugType;
 import com.example.myminibugtracker.ui.forms.BugForm;
+import com.vaadin.data.Property;
+import com.vaadin.terminal.gwt.server.WebApplicationContext;
+import com.vaadin.terminal.gwt.server.WebBrowser;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.Window.Notification;
 
@@ -35,18 +41,19 @@ public class BugList extends AbstractBugList {
 		setContainerDataSource(bugContainer);
 
 		// set visible columns
-		final String[] VISIBLE_COL = new String[] { "title", "bugTypeTitle",
-				"statusTitle", "creationDateAsString",
-				"modificationDateAsString" };
+		final String[] VISIBLE_COL = new String[] { "title", "bugType",
+				"status", "creationTimeStamp", "modificationTimeStamp" };
 		setVisibleColumns(VISIBLE_COL);
 
 		// set column headers
 		final String[] COL_HEADERS = new String[] {
-				Messages.getString("ui.mainwindow.colHeaders.title"),
-				Messages.getString("ui.mainwindow.colHeaders.type"),
-				Messages.getString("ui.mainwindow.colHeaders.state"),
-				Messages.getString("ui.mainwindow.colHeaders.creationDate"),
-				Messages.getString("ui.mainwindow.colHeaders.modificationDate") };
+				this.app.getRM().message("ui.mainwindow.colHeaders.title"),
+				this.app.getRM().message("ui.mainwindow.colHeaders.type"),
+				this.app.getRM().message("ui.mainwindow.colHeaders.state"),
+				this.app.getRM().message(
+						"ui.mainwindow.colHeaders.creationDate"),
+				this.app.getRM().message(
+						"ui.mainwindow.colHeaders.modificationDate") };
 		setColumnHeaders(COL_HEADERS);
 
 	}
@@ -58,7 +65,7 @@ public class BugList extends AbstractBugList {
 		VerticalLayout vl = new VerticalLayout();
 		vl.addComponent(new BugForm((Bug) itemId, app));
 		app.getDialogAndFormManager().showDialog(
-				Messages.getString("ui.form.BugForm.title.addBug"), vl,
+				this.app.getRM().message("ui.form.BugForm.title.addBug"), vl,
 				"420px", "390px");
 
 		// show notification
@@ -78,6 +85,56 @@ public class BugList extends AbstractBugList {
 			this.app.getRemoveBugButton().setEnabled(false);
 		}
 
+	}
+
+	@Override
+	protected String formatPropertyValue(Object rowId, Object colId,
+			Property property) {
+		if (colId.equals("bugType")) {
+			for (BugType bugTypeValue : BugType.values()) {
+				if (property.getValue() != null
+						&& property.getValue().equals(bugTypeValue.toString())) {
+
+					return this.app.getRM().enumMessage(bugTypeValue);
+				}
+			}
+			return null;
+		}
+
+		if (colId.equals("status")) {
+			for (BugStatus statusValue : BugStatus.values()) {
+				if (property.getValue() != null
+						&& property.getValue().equals(statusValue.toString())) {
+
+					return this.app.getRM().enumMessage(statusValue);
+				}
+			}
+			return null;
+		}
+
+		if (colId.equals("creationTimeStamp")) {
+			Long creationTimeStamp = (Long) property.getValue();
+			return getLocaleDateForTimeStamp(creationTimeStamp);
+
+		}
+
+		if (colId.equals("modificationTimeStamp")) {
+			Long modificationTimeStamp = (Long) property.getValue();
+			return getLocaleDateForTimeStamp(modificationTimeStamp);
+		}
+
+		return super.formatPropertyValue(rowId, colId, property);
+	}
+
+	//TODO: in einen Service umziehen
+	public String getLocaleDateForTimeStamp(Long timestamp) {
+
+		if (timestamp == 0) {
+			timestamp = null;
+		}
+
+		return this.app.getRM().formatDateTime(timestamp, "unknown",
+				this.app.getLocale(), DateTimeZone.forID("Europe/Berlin"));
 	}
 
 }

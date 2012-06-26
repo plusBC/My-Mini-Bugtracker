@@ -18,11 +18,11 @@ public class BugServiceImpl implements BugService {
 
 	public void save(Bug bug) {
 		if (bug.hasId()) {
-			bug.setModificationDate(System.currentTimeMillis());
+			bug.setModificationTimeStamp(System.currentTimeMillis());
 			bugDao.update(bug);
 
 		} else {
-			bug.setCreationDate(System.currentTimeMillis());
+			bug.setCreationTimeStamp(System.currentTimeMillis());
 			bugDao.persist(bug);
 		}
 

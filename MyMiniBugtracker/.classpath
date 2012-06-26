@@ -22,5 +22,7 @@
 			<attribute name="org.eclipse.jst.component.dependency" value="/WEB-INF/lib"/>
 		</attributes>
 	</classpathentry>
+	<classpathentry kind="lib" path="D:/bc/codebank/target/codebank-1.0.22.jar" sourcepath="D:/bc/codebank/target/codebank-1.0.22-sources.jar"/>
+	<classpathentry kind="lib" path="D:/bc/codebank/target/codebank-1.0.22-sources.jar"/>
 	<classpathentry kind="output" path="WEB-INF/classes"/>
 </classpath>

@@ -1,7 +1,6 @@
 package com.example.myminibugtracker.ui.forms;
 
 import com.example.myminibugtracker.MyminibugtrackerApplication;
-import com.example.myminibugtracker.services.Messages;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Button.ClickListener;
@@ -17,8 +16,8 @@ public abstract class AbstractForm extends Form {
 		this.app = app;
 
 		ClickListener myButtonClickListener = new MyButtonClickListener();
-		save = new Button(Messages.getString("ui.button.save"), myButtonClickListener); 
-		cancel = new Button(Messages.getString("ui.button.cancel"), myButtonClickListener); 
+		save = new Button(this.app.getRM().message("ui.button.save"), myButtonClickListener); 
+		cancel = new Button(this.app.getRM().message("ui.button.cancel"), myButtonClickListener); 
 
 		HorizontalLayout hl = new HorizontalLayout();
 		hl.setSpacing(true);

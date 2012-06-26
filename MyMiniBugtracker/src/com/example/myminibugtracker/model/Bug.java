@@ -1,13 +1,6 @@
 package com.example.myminibugtracker.model;
 
 import org.apache.commons.lang.StringUtils;
-import org.joda.time.DateTime;
-import org.joda.time.format.DateTimeFormat;
-import org.joda.time.format.DateTimeFormatter;
-
-import com.example.myminibugtracker.model.enums.BugStatus;
-import com.example.myminibugtracker.model.enums.BugType;
-import com.example.myminibugtracker.services.Messages;
 
 public class Bug {
 
@@ -16,28 +9,27 @@ public class Bug {
 	private String description;
 	private String bugType;
 	private String status;
-	private long creationDate;
-	private long modificationDate;
+	private long creationTimeStamp;
+	private long modificationTimeStamp;
 
-	// (AUI) Achtung, Haarspalterei! ;) Dies ist eigentlich kein "Date" sondern ein "Timestamp"
-	public long getCreationDate() {
-		return creationDate;
+	public long getCreationTimeStamp() {
+		return creationTimeStamp;
 	}
 
-	public void setCreationDate(long creationDate) {
-		this.creationDate = creationDate;
+	public void setCreationTimeStamp(long creationTimeStamp) {
+		this.creationTimeStamp = creationTimeStamp;
 	}
 
-	public long getModificationDate() {
-		return modificationDate;
+	public long getModificationTimeStamp() {
+		return modificationTimeStamp;
 	}
 
-	public void setModificationDate(long modificationDate) {
-		if (modificationDate < creationDate) {
+	public void setModificationTimeStamp(long modificationTimeStamp) {
+		if (modificationTimeStamp < creationTimeStamp) {
 			throw new RuntimeException(
-					Messages.getString("exeption.Bug.ModificationDateError"));
+					"cannot set modification date before creation date");
 		}
-		this.modificationDate = modificationDate;
+		this.modificationTimeStamp = modificationTimeStamp;
 	}
 
 	public String getTitle() {
@@ -63,27 +55,9 @@ public class Bug {
 	public void setBugType(String bugType) {
 		this.bugType = bugType;
 	}
-	
-	public String getBugTypeTitle() {
-		for (BugType bugTypeValue : BugType.values()){
-			if (this.bugType != null && this.bugType.equals(bugTypeValue.toString())){
-				return bugTypeValue.getTitle();
-			}
-		}
-		return null;
-	}
 
 	public String getStatus() {
 		return status;
-	}
-	
-	public String getStatusTitle() {
-		for (BugStatus statusValue : BugStatus.values()){
-			if (this.status!= null && this.status.equals(statusValue.toString())){
-				return statusValue.getTitle();
-			}
-		}
-		return null;
 	}
 
 	public void setStatus(String status) {
@@ -96,23 +70,6 @@ public class Bug {
 
 	public void setId(String id) {
 		this.id = id;
-	}
-
-	public String getCreationDateAsString() {
-		//TODO Datum formatieren zentralisieren und in Abhängigkeit der Locale des benutzers formatieren
-		DateTime creationDate = new DateTime(this.creationDate);
-		DateTimeFormatter formatter = DateTimeFormat
-				.forPattern("dd.MM.YYYY HH:mm:ss");
-		return creationDate.toString(formatter);
-	}
-
-	public String getModificationDateAsString() {
-		//TODO Datum formatieren zentralisieren und in Abhängigkeit der Locale des benutzers formatieren
-		DateTime modificationDate = new DateTime(this.modificationDate);
-		DateTimeFormatter formatter = DateTimeFormat
-				.forPattern("dd.MM.YYYY HH:mm:ss");
-		return modificationDate.toString(formatter);
-
 	}
 
 	public boolean hasId() {

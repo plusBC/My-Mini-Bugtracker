@@ -8,7 +8,6 @@ import com.example.myminibugtracker.MyminibugtrackerApplication;
 import com.example.myminibugtracker.model.Bug;
 import com.example.myminibugtracker.model.enums.BugStatus;
 import com.example.myminibugtracker.model.enums.BugType;
-import com.example.myminibugtracker.services.Messages;
 import com.vaadin.data.Item;
 import com.vaadin.data.util.BeanItem;
 import com.vaadin.terminal.UserError;
@@ -30,7 +29,7 @@ public class BugForm extends AbstractForm {
 			bug = new Bug();
 		}
 
-		BugFieldFactory fieldFactory = new BugFieldFactory(this, bug);
+		BugFieldFactory fieldFactory = new BugFieldFactory(bug);
 		setFormFieldFactory(fieldFactory);
 
 		setFormDataSource(bug, Arrays.asList(visiblePropertiesArray));
@@ -57,8 +56,8 @@ public class BugForm extends AbstractForm {
 		TextField title = (TextField) getField("title");
 		String titleValue = (String) title.getValue();
 		if (StringUtils.isBlank(titleValue)) {
-			title.setComponentError(new UserError(Messages
-					.getString("ui.form.BugForm.error.titleEmpty")));
+			title.setComponentError(new UserError(this.app.getRM().message(
+					"ui.form.BugForm.error.titleEmpty")));
 			valid = false;
 		}
 
@@ -74,8 +73,8 @@ public class BugForm extends AbstractForm {
 		TextField description = (TextField) getField("description");
 		String descriptionValue = (String) description.getValue();
 		if (StringUtils.isBlank(descriptionValue)) {
-			description.setComponentError(new UserError(Messages
-					.getString("ui.form.BugForm.error.descriptionEmpty")));
+			description.setComponentError(new UserError(this.app.getRM()
+					.message("ui.form.BugForm.error.descriptionEmpty")));
 			valid = false;
 		}
 
@@ -91,8 +90,8 @@ public class BugForm extends AbstractForm {
 		ComboBox status = (ComboBox) getField("status");
 		BugStatus statusValue = (BugStatus) status.getValue();
 		if (statusValue == null) {
-			status.setComponentError(new UserError(Messages
-					.getString("ui.form.BugForm.error.statusEmpty")));
+			status.setComponentError(new UserError(this.app.getRM().message(
+					"ui.form.BugForm.error.statusEmpty")));
 			valid = false;
 		}
 
@@ -107,8 +106,8 @@ public class BugForm extends AbstractForm {
 		ComboBox bugType = (ComboBox) getField("bugType");
 		BugType bugTypeValue = (BugType) bugType.getValue();
 		if (bugTypeValue == null) {
-			bugType.setComponentError(new UserError(Messages
-					.getString("ui.form.BugForm.error.bugTypeEmpty")));
+			bugType.setComponentError(new UserError(this.app.getRM().message(
+					"ui.form.BugForm.error.bugTypeEmpty")));
 			valid = false;
 		}
 
@@ -149,10 +148,10 @@ public class BugForm extends AbstractForm {
 		BugForm bugForm;
 		Bug bug;
 
-		// (AUI) Ich meine, du brauchst hier die Referenz auf BugForm nicht, da es ja eine innere Klasse ist.
-		//				http://openbook.galileodesign.de/javainsel5/javainsel06_011.htm#Rxx747java06011040001EC1F02610D
-		public BugFieldFactory(BugForm bugForm, Bug bug) {
-			this.bugForm = bugForm;
+		// (AUI) Ich meine, du brauchst hier die Referenz auf BugForm nicht, da
+		// es ja eine innere Klasse ist.
+		// http://openbook.galileodesign.de/javainsel5/javainsel06_011.htm#Rxx747java06011040001EC1F02610D
+		public BugFieldFactory(Bug bug) {
 			this.bug = bug;
 		}
 
@@ -162,15 +161,15 @@ public class BugForm extends AbstractForm {
 
 			if ("title".equals(propertyId)) {
 				TextField title = createTextField(
-						Messages.getString("ui.form.BugForm.caption.title"),
+						app.getRM().message("ui.form.BugForm.caption.title"),
 						true);
 				return title;
 			}
 
 			if ("description".equals(propertyId)) {
 				TextField textField = createTextField(
-						Messages.getString("ui.form.BugForm.caption.description"),
-						true);
+						app.getRM().message(
+								"ui.form.BugForm.caption.description"), true);
 				// ich kann leider hier keine TextArea verwenden, also
 				// workaround
 				textField.setRows(10);
@@ -186,12 +185,13 @@ public class BugForm extends AbstractForm {
 			// Plus: Welches "normale"? auf http://demo.vaadin.com/sampler wird
 			// das doch auch verwendet! Warum sollte das nicht verwendet werden?
 			// naja... ich nehm einfach mal die ComboBox
-			ComboBox bugTypeSelect = createComboBox(Messages
-					.getString("ui.form.BugForm.caption.type"));
+			ComboBox bugTypeSelect = createComboBox(app.getRM().message(
+					"ui.form.BugForm.caption.type"));
 			BugType[] bugTypes = BugType.values();
 			for (BugType bugType : bugTypes) {
 				bugTypeSelect.addItem(bugType);
-				bugTypeSelect.setItemCaption(bugType, bugType.getTitle());
+				bugTypeSelect.setItemCaption(bugType,
+						app.getRM().enumMessage(bugType));
 				if (this.bug != null && bug.getBugType() != null
 						&& bug.getBugType().equals(bugType.toString())) {
 					bugTypeSelect.select(bugType);
@@ -206,12 +206,13 @@ public class BugForm extends AbstractForm {
 			// Plus: Welches "normale"? auf http://demo.vaadin.com/sampler wird
 			// das doch auch verwendet! Warum sollte das nicht verwendet werden?
 			// naja... ich nehm einfach mal die ComboBox
-			ComboBox bugStatusSelect = createComboBox(Messages
-					.getString("ui.form.BugForm.caption.state"));
+			ComboBox bugStatusSelect = createComboBox(app.getRM().message(
+					"ui.form.BugForm.caption.state"));
 			BugStatus[] bugStatus = BugStatus.values();
 			for (BugStatus bugState : bugStatus) {
 				bugStatusSelect.addItem(bugState);
-				bugStatusSelect.setItemCaption(bugState, bugState.getTitle());
+				bugStatusSelect.setItemCaption(bugState, app.getRM()
+						.enumMessage(bugState));
 				if (this.bug != null && bug.getStatus() != null
 						&& bug.getStatus().equals(bugState.toString())) {
 					bugStatusSelect.select(bugState);

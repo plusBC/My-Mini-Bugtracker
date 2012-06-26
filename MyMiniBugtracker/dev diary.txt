@@ -188,7 +188,7 @@ hinzugefügt der die Methode onSelectionChange(Object value) ruft. Diese Methode 
 Wow, heute habe ich doch einiges erreicht! Nächste Woche werde ich mich wohl mal wieder mit der Datenbankproblematik beschäftigen.
 
 
-19.06.2012 - Ueberarbeiten Kommentare Aui
+19.06.2012 - Überarbeiten Kommentare Aui
 Aui hat vergangene Woche sich das Projekt nochmal angeschaut und an einigen Stellen wieder Verbesserungskommentare eingefuegt. Die Kommentare werde ich mir heute ansehen und abarbeiten. Außerdem hat Aui sich das Autowiring Problem mal angesehen und Autowiring gängisch gemacht. 
 Diese Änderungen will ich mir auch mal näher ansehen.  
 
@@ -216,3 +216,26 @@ Also auch noch das händisch einbinden... Was läuft immer noch nicht? Gleich noch
 Das habe ich jetzt auch mal eingebaut. UND ES FUNKTIONIERT!!! *HERUMHÜPFT*
 
 Das ist ein Guter Zeitpunkt um für heute Feierabend zu machen. Um die anderen Anmerkungen kümmere ich mich dann nächste Woche. 
+
+
+26.06.2012 - Überarbeiten Kommentare Aui (Fortsetzung)
+Ich beginne mit der Überarbeitung der Messages. Aui hat mir erlaubt die Codebank und die darin enthaltene RM Klasse zu verwenden. Ich füge also erstmal das .jar dem Deployment Assembly und dem Build Path hinzu. Hat soweit ganz gut funktioniert. Jetzt muss ich die RM Klasse 
+nur noch richtig konfigurieren. Im DMS konnten haben wir das glaube ich über autowiring erledigt. Mal ausprobieren ob ich das hinbekomm..
+
+Jep, funktioniert jetzt. Ich habe in diesem Zug auch zwei lokalisierte .properties Dateien erstellt. Nun noch alle Messages auf die RM Klasse umbiegen. OU, Problem... wie mache ich das wohl mit den Titeln der beiden Enums BugType und BugStatus? Autowiring der RM-Klasse oder das 
+Übergeben einer Referenz dorthin geht ja nicht. Ich weiß, dass es in der RM Klasse einen .enumMessage Methode gibt, daher brauchen wir den Titel eigentlich garnichtmehr explizit in der Enum speichern. Nur doof, dass ich auch in der Modelklasse auf den Titel zurückgreife 
+um die Tabellenspalten richtig zu erzeugen (Bug Titel statt ENUM). In der Modelklasse funktioniert das Autowiring der RM Klasse ebenfalls nicht... Also was tun???
+
+Nachdem mir nach einer Weile nichts wirklich intelligentes eingefallen ist, schreibe jetzt erstmal einen Workaround, indem ich eine Helper Methode in das Model aufnehme. Diese Methode erzeugt mir das RM nochmal. Nicht wirklich schön, aber zweckmäßig. Vielleicht fällt mir 
+demnächst noch was besseres ein. Den Titel kann ich ja auch nicht speichern, da er zwischen den Sprachversionen ja schon abweichen kann.
+
+Ein ähnliches Problem besteht auch bei der Formatierung des Datums prinzipiell würde ich gerne das RM nehmen, aber über die Modelklasse wird das nicht funktionieren. Hmm... Was sagt eigentlich Vaadin zur Internationalisierung von Datumsangaben in einer Tabelle?
+
+Ach, das Löst ja all meine Probleme ^.^: 
+https://vaadin.com/forum/-/message_boards/view_message/19014
+
+Es wird in der BugList eine zusätzliche Methode benötigt, die eine Methode formatPropertyValue(Object rowId, Object colId, Property property) aus der Tabelle überschreibt. Hier kann dann anhand der colId die Formatierung der property vorgenommen werden. Die getXYAsString()  
+Methoden werden also garnichtmehr im Model gebraucht. Jetzt noch alles schnell Testen und dann mach ich Feierabend für heute. 
+
+Nächste Woche wird es glaub ich mal Zeit ein ordentliches Logging hin zu bekommen. 
+

@@ -1,6 +1,8 @@
 package com.example.myminibugtracker.ui;
 
 import com.example.myminibugtracker.MyminibugtrackerApplication;
+import com.example.myminibugtracker.model.enums.BugStatus;
+import com.example.myminibugtracker.model.enums.BugType;
 import com.vaadin.data.Property;
 import com.vaadin.event.ItemClickEvent;
 import com.vaadin.event.ItemClickEvent.ItemClickListener;

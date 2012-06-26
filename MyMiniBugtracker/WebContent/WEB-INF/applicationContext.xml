@@ -47,5 +47,16 @@
 	<bean class="com.example.myminibugtracker.dao.BugDaoDb4o">
 		<property name="objectContainer" ref="container" />
 	</bean>
+	
+	
+	<bean class="org.springframework.context.support.ReloadableResourceBundleMessageSource" id="messageSource"> 
+		<property name="basename"> <value>classpath:resources/resource-bundles/messages</value> </property> 
+		<property name="defaultEncoding" value="ISO-8859-15"/> 
+	</bean> 
+	
+	<bean class="de.byteconsult.codebank.i18n.RM" name="rm"> 
+		<constructor-arg ref="messageSource"/> 
+	</bean>
+
 
 </beans>

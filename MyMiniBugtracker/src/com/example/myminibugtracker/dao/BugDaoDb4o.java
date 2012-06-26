@@ -12,6 +12,7 @@ public class BugDaoDb4o extends Db4oDaoSupport implements BugDao {
 	}
 
 	public void persist(Bug bug) {
+		bug.setId(""+System.currentTimeMillis());
 		getDb4oTemplate().set(bug);
 
 	}

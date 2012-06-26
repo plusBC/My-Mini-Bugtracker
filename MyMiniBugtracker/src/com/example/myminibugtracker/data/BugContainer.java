@@ -36,11 +36,14 @@ public class BugContainer extends BeanItemContainer<Bug> implements
 	}
 
 	public static BugContainer createWithTestData() {
-		
-		// (AUI) wenn du mit Testdaten arbeiten möchtest, dann kannst du besser ein entsprechendes
-		// 				"BugDaoSampleData" oder so anlegen, wo die Daten von unten verwendet werden
-		//				Später tauscht man dann einfach das DAO gegen ein echtes aus und muss hier nix ändern!
-		
+
+		// (AUI) wenn du mit Testdaten arbeiten möchtest, dann kannst du besser
+		// ein entsprechendes
+		// "BugDaoSampleData" oder so anlegen, wo die Daten von unten verwendet
+		// werden
+		// Später tauscht man dann einfach das DAO gegen ein echtes aus und muss
+		// hier nix ändern!
+
 		final String[] titles = { "Titel 1", "Titel 2", "Titel 3", "Titel 4",
 				"Titel 5" };
 		// final String[] descriptions = { "description 1", "description 2",
@@ -67,12 +70,13 @@ public class BugContainer extends BeanItemContainer<Bug> implements
 				Bug bug = new Bug();
 				bug.setTitle(titles[r.nextInt(titles.length)]);
 				// bug.setDescription(descriptions[r.nextInt(descriptions.length)]);
-				bug.setStatus(status[r.nextInt(status.length)].getTitle());
-				bug.setCreationDate(creationDates[r
+
+				bug.setStatus(status[r.nextInt(status.length)].toString());
+				bug.setCreationTimeStamp(creationDates[r
 						.nextInt(creationDates.length)]);
-				bug.setModificationDate(modificationDates[r
+				bug.setModificationTimeStamp(modificationDates[r
 						.nextInt(modificationDates.length)]);
-				bug.setBugType(bugTypes[r.nextInt(bugTypes.length)].getTitle());
+				bug.setBugType(bugTypes[r.nextInt(bugTypes.length)].toString());
 				c.addItem(bug);
 			}
 		} catch (InstantiationException e) {
